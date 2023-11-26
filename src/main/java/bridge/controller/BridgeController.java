@@ -1,17 +1,18 @@
 package bridge.controller;
 
 import bridge.BridgeRandomNumberGenerator;
+import bridge.constants.GameValue;
 import bridge.domain.Bridge;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgeMaker;
-import bridge.view.InputHandler;
+import bridge.view.handler.InputHandler;
 import bridge.view.OutputView;
-import java.util.List;
 
 public class BridgeController {
     private final InputHandler inputHandler;
     private final OutputView outputView;
     private final BridgeGame bridgeGame;
+    private boolean status = true;
 
     public BridgeController(InputHandler inputHandler, OutputView outputView, BridgeGame bridgeGame) {
         this.inputHandler = inputHandler;
@@ -19,29 +20,56 @@ public class BridgeController {
         this.bridgeGame = bridgeGame;
     }
 
-    public void run() {
-        System.out.println("다리 건너기 게임을 시작합니다.");
-        System.out.println();
+    public void start() {
+        outputView.printStartMessage();
+        Bridge bridge = createBridge();
+        run(bridge);
+    }
 
-        System.out.println("다리의 길이를 입력해주세요.");
-        int bridgeSize = inputHandler.readBridgeSize();
-        System.out.println();
+    private Bridge createBridge() {
+        outputView.printBridgeSizeInputMessage();
         BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
-        List<String> randomBridge = bridgeMaker.makeBridge(bridgeSize);
-        System.out.println(randomBridge);
+        return inputHandler.createValidatedBridge(bridgeMaker);
+    }
 
-
-        for (String square : randomBridge) {
-            System.out.println("이동할 칸을 선택해주세요. (위: U, 아래: D)");
-            String moveCommand = inputHandler.readMoving();
-            Bridge bridge = bridgeGame.move(square, moveCommand);
-            System.out.println(bridge);
-            System.out.println();
+    private void run(Bridge bridge) {
+        while (status) {
+            move(bridge);
+            if (isFinished()) {
+                finishGame();
+            }
+            if (!isFinished()) {
+                askRetry();
+            }
         }
+    }
 
+    private void move(Bridge bridge) {
+        for (String square : bridge.getBridge()) {
+            outputView.printMoveInputMessage();
+            String moveCommand = inputHandler.readMoving();
+            bridgeGame.move(square, moveCommand);
+            outputView.printMap(bridgeGame.getMoveResult());
+        }
+    }
 
+    private boolean isFinished() {
+        return bridgeGame.isSuccessful();
+    }
 
-        System.out.println("게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)");
-        inputHandler.readGameCommand();
+    private void finishGame() {
+        outputView.printResult(bridgeGame);
+        status = false;
+    }
+
+    private void askRetry() {
+        outputView.printRetryMessage();
+        String retryCommand = inputHandler.readGameCommand();
+        if (retryCommand.equals(GameValue.RETRY_COMMAND)) {
+            bridgeGame.retry();
+        }
+        if (retryCommand.equals(GameValue.QUIT_COMMAND)) {
+            outputView.printResult(bridgeGame);
+        }
     }
 }
