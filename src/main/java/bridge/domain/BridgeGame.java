@@ -1,32 +1,30 @@
 package bridge.domain;
 
+import bridge.constants.GameValue;
+
 /**
  * 다리 건너기 게임을 관리하는 클래스
  */
 public class BridgeGame {
-    private static final String UPPER = "U";
-    private static final String LOWWER = "D";
-    private static final String MOVE = "O";
-    private static final String STOP = "X";
-    private final Bridge bridge;
-    private final int retryCount;
 
-    public BridgeGame(Bridge bridge, int retryCount) {
-        this.bridge = bridge;
+    private int retryCount;
+    private MoveResult moveResult;
+
+    public BridgeGame(MoveResult moveResult, int retryCount) {
+        this.moveResult = moveResult;
         this.retryCount = retryCount;
     }
 
     /**
      * 사용자가 칸을 이동할 때 사용하는 메서드
      */
-    public Bridge move(String square, String moveCommand) {
-        if (moveCommand.equals(UPPER)) {
+    public void move(String square, String moveCommand) {
+        if (moveCommand.equals(GameValue.MOVE_UP_COMMAND)) {
             moveUp(square, moveCommand);
         }
-        if (moveCommand.equals(LOWWER)) {
-            moveLowwer(square, moveCommand);
+        if (moveCommand.equals(GameValue.MOVE_DOWN_COMMAND)) {
+            moveLower(square, moveCommand);
         }
-        return bridge;
     }
 
     private boolean isMoveUp(String square, String moveCommand) {
@@ -35,29 +33,50 @@ public class BridgeGame {
 
     private void moveUp(String square, String moveCommand) {
         if (isMoveUp(square, moveCommand)) {
-            bridge.moveUp(MOVE);
+            moveResult.moveUp(GameValue.MOVE);
         }
         if (!isMoveUp(square, moveCommand)) {
-            bridge.moveUp(STOP);
+            moveResult.moveUp(GameValue.STOP);
         }
     }
 
-    private boolean isMoveLowwer(String square, String moveCommand) {
+    private boolean isMoveLower(String square, String moveCommand) {
         return square.equals(moveCommand);
     }
 
-    private void moveLowwer(String square, String moveCommand) {
-        if (isMoveLowwer(square, moveCommand)) {
-            bridge.moveLowwer(MOVE);
+    private void moveLower(String square, String moveCommand) {
+        if (isMoveLower(square, moveCommand)) {
+            moveResult.moveLowwer(GameValue.MOVE);
         }
-        if (!isMoveLowwer(square, moveCommand)) {
-            bridge.moveLowwer(STOP);
+        if (!isMoveLower(square, moveCommand)) {
+            moveResult.moveLowwer(GameValue.STOP);
         }
+    }
+
+    public boolean isSuccessful() {
+        return moveResult.isSuccessful();
+    }
+
+    public String getGameResult() {
+        if (isSuccessful()) {
+            return "성공";
+        }
+        return "실패";
     }
 
     /**
      * 사용자가 게임을 다시 시도할 때 사용하는 메서드
      */
     public void retry() {
+        retryCount++;
+        moveResult = new MoveResult();
+    }
+
+    public int getRetryCount() {
+        return retryCount;
+    }
+
+    public MoveResult getMoveResult() {
+        return moveResult;
     }
 }
