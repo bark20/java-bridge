@@ -34,7 +34,6 @@ public class OutputView {
 
     public void welcomePlayer() {
         printer.printLine(WELCOME_MESSAGE);
-        printer.printEmptyLine();
     }
 
     public void showErrorMessage(String message) {
