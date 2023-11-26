@@ -44,7 +44,6 @@ public class GameController {
                 break;
             }
         }
-
     }
 
     private GameCommand inputRetryOrNot() {
