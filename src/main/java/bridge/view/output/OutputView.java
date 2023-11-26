@@ -1,9 +1,20 @@
 package bridge.view.output;
 
+import bridge.common.utils.formatter.ErrorMessageFormatter;
+import bridge.view.print.Printer;
+
 /**
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
  */
 public class OutputView {
+
+    private static final String WELCOME_MESSAGE = "다리 건너기 게임을 시작합니다.";
+
+    private final Printer printer;
+
+    public OutputView(Printer printer) {
+        this.printer = printer;
+    }
 
     /**
      * 현재까지 이동한 다리의 상태를 정해진 형식에 맞춰 출력한다.
@@ -20,4 +31,10 @@ public class OutputView {
      */
     public void printResult() {
     }
+
+    public void welcomePlayer() {
+        printer.printLine(WELCOME_MESSAGE);
+        printer.printEmptyLine();
+    }
+
 }
