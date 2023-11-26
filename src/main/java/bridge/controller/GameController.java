@@ -5,6 +5,7 @@ import bridge.BridgeRandomNumberGenerator;
 import bridge.domain.Bridge;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgeSize;
+import bridge.domain.GameCommand;
 import bridge.domain.MovingDirection;
 import bridge.domain.Player;
 import bridge.view.input.InputView;
@@ -31,26 +32,38 @@ public class GameController {
         // 다리 생성
         BridgeMaker maker = new BridgeMaker(new BridgeRandomNumberGenerator());
         Bridge bridge = Bridge.from(maker.makeBridge(bridgeSize.getSize()));
-        Player player = Player.defaultOf();
 
         // 게임 생성
-        BridgeGame bridgeGame = new BridgeGame(bridge, player);
+        BridgeGame bridgeGame = BridgeGame.defaultOf(bridge);
 
-        // 이동칸 입력
-        MovingDirection direction = input(() -> MovingDirection.ofAbbreviation(inputView.readMovingDirection()));
+        while (bridgeGame.isOnGoing()) {
+            MovingDirection direction = input(() -> MovingDirection.ofAbbreviation(inputView.readMovingDirection()));
+            bridgeGame.move(direction);
+            outputView.showMoveResult(bridgeGame.getMoveResults());
 
-        // 이동
-        bridgeGame.move(direction);
+            // 게임이 완전히 끝났으면 결과 출력
+            if (bridgeGame.isFinished()) {
+                outputView.showTotalResult(bridgeGame);
+                break;
+            }
+
+            // 게임이 완전히 끝난게 아니라 실패해서 끝났다면 재입력 로직
+            if (bridgeGame.isStopped()) {
+                // input 재시도
+                GameCommand command = input(() -> GameCommand.ofAbbreviation(inputView.readGameCommand()));
+
+                if (command.isRetry()) {
+                    bridgeGame.retry();
+                    continue;
+                }
+
+                // not retry
+                outputView.showTotalResult(bridgeGame);
+                break;
+            }
+        }
+
     }
-
-//    private <T> T process(Supplier<T> supplier, ErrorConsumer consumer) {
-//        try {
-//            return supplier.get();
-//        } catch (IllegalArgumentException | IllegalStateException e) {
-//            consumer.accept();
-//            return process(supplier, consumer);
-//        }
-//    }
 
     public <T> T input(Supplier<T> supplier) {
         try {
