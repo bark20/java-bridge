@@ -1,5 +1,8 @@
-package bridge.view;
+package bridge.view.handler;
 
+import bridge.domain.Bridge;
+import bridge.domain.BridgeMaker;
+import bridge.view.InputView;
 import java.util.function.Supplier;
 
 public class InputHandler {
@@ -9,8 +12,11 @@ public class InputHandler {
         this.inputView = inputView;
     }
 
-    public int readBridgeSize() {
-        return receiveValidatedInput(inputView::readBridgeSize);
+    public Bridge createValidatedBridge(BridgeMaker bridgeMaker) {
+        return receiveValidatedInput(() -> {
+            int bridgeSize = inputView.readBridgeSize();
+            return Bridge.from(bridgeMaker.makeBridge(bridgeSize));
+        });
     }
 
     public String readMoving() {
