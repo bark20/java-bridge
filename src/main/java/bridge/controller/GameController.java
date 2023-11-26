@@ -35,9 +35,7 @@ public class GameController {
             }
 
             if (bridgeGame.isStopped()) {
-                GameCommand command = input(() -> GameCommand.ofAbbreviation(inputView.readGameCommand()));
-
-                if (command.isRetry()) {
+                if (inputRetryOrNot().isRetry()) {
                     bridgeGame.retry();
                     continue;
                 }
@@ -47,6 +45,10 @@ public class GameController {
             }
         }
 
+    }
+
+    private GameCommand inputRetryOrNot() {
+        return input(() -> GameCommand.ofAbbreviation(inputView.readGameCommand()));
     }
 
     private void movePosition(BridgeGame bridgeGame) {
