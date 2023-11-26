@@ -7,7 +7,6 @@ import bridge.domain.BridgeGame;
 import bridge.domain.BridgeSize;
 import bridge.domain.GameCommand;
 import bridge.domain.MovingDirection;
-import bridge.domain.Player;
 import bridge.view.input.InputView;
 import bridge.view.output.OutputView;
 import java.util.function.Supplier;
@@ -30,15 +29,12 @@ public class GameController {
         while (bridgeGame.isOnGoing()) {
             movePosition(bridgeGame);
 
-            // 게임이 완전히 끝났으면 결과 출력
             if (bridgeGame.isFinished()) {
                 outputView.showTotalResult(bridgeGame);
                 break;
             }
 
-            // 게임이 완전히 끝난게 아니라 실패해서 끝났다면 재입력 로직
             if (bridgeGame.isStopped()) {
-                // input 재시도
                 GameCommand command = input(() -> GameCommand.ofAbbreviation(inputView.readGameCommand()));
 
                 if (command.isRetry()) {
@@ -46,7 +42,6 @@ public class GameController {
                     continue;
                 }
 
-                // not retry
                 outputView.showTotalResult(bridgeGame);
                 break;
             }
