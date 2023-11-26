@@ -1,19 +1,22 @@
 package bridge.controller;
 
 import bridge.BridgeRandomNumberGenerator;
+import bridge.domain.Bridge;
+import bridge.domain.BridgeGame;
 import bridge.domain.BridgeMaker;
 import bridge.view.InputHandler;
 import bridge.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BridgeController {
     private final InputHandler inputHandler;
     private final OutputView outputView;
+    private final BridgeGame bridgeGame;
 
-    public BridgeController(InputHandler inputHandler, OutputView outputView) {
+    public BridgeController(InputHandler inputHandler, OutputView outputView, BridgeGame bridgeGame) {
         this.inputHandler = inputHandler;
         this.outputView = outputView;
+        this.bridgeGame = bridgeGame;
     }
 
     public void run() {
@@ -24,39 +27,19 @@ public class BridgeController {
         int bridgeSize = inputHandler.readBridgeSize();
         System.out.println();
         BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
-        List<String> bridge = bridgeMaker.makeBridge(bridgeSize);
-        System.out.println(bridge);
+        List<String> randomBridge = bridgeMaker.makeBridge(bridgeSize);
+        System.out.println(randomBridge);
 
 
-        List<String> upperBridge = new ArrayList<>(bridge.size());
-        List<String> lowwerBridge = new ArrayList<>(bridge.size());
-
-        for (String s : bridge) {
+        for (String square : randomBridge) {
             System.out.println("이동할 칸을 선택해주세요. (위: U, 아래: D)");
             String moveCommand = inputHandler.readMoving();
-
-            if (moveCommand.equals("U") && s.equals(moveCommand)) {
-                upperBridge.add("O");
-                lowwerBridge.add(" ");
-            }
-            if (moveCommand.equals("U") && !s.equals(moveCommand)) {
-                upperBridge.add("X");
-                lowwerBridge.add(" ");
-            }
-
-            if (moveCommand.equals("D") && s.equals(moveCommand)) {
-                upperBridge.add(" ");
-                lowwerBridge.add("O");
-            }
-            if (moveCommand.equals("D") && !s.equals(moveCommand)) {
-                upperBridge.add(" ");
-                lowwerBridge.add("X");
-            }
-
-            System.out.println("[ " + String.join(" | ", upperBridge) + " ]");
-            System.out.println("[ " + String.join(" | ", lowwerBridge) + " ]");
+            Bridge bridge = bridgeGame.move(square, moveCommand);
+            System.out.println(bridge);
             System.out.println();
         }
+
+
 
         System.out.println("게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)");
         inputHandler.readGameCommand();
