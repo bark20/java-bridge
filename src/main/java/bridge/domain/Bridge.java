@@ -22,4 +22,8 @@ public class Bridge {
         return directions;
     }
 
+    public int getSize() {
+        return this.directions.size();
+    }
+
 }

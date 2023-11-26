@@ -14,12 +14,20 @@ public class MovePosition {
         return new MovePosition(DEFAULT_POSITION);
     }
 
+    public static MovePosition from(int position) {
+        return new MovePosition(position);
+    }
+
     public int getPosition() {
         return position;
     }
 
     public MovePosition moveNext() {
         return new MovePosition(this.position + 1);
+    }
+
+    public boolean isGreaterThan(int position) {
+        return this.position > position;
     }
 
 }

@@ -11,4 +11,12 @@ public enum MoveResult {
         this.resultSymbol = resultSymbol;
     }
 
+    public String getResultSymbol() {
+        return resultSymbol;
+    }
+
+    public boolean isFail() {
+        return this == FAIL;
+    }
+
 }

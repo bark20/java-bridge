@@ -1,7 +1,10 @@
 package bridge.view.output;
 
 import bridge.common.utils.formatter.ErrorMessageFormatter;
+import bridge.domain.BridgeGame;
+import bridge.domain.MoveRecord;
 import bridge.view.print.Printer;
+import java.util.List;
 
 /**
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
@@ -38,6 +41,16 @@ public class OutputView {
 
     public void showErrorMessage(String message) {
         printer.printLine(ErrorMessageFormatter.addErrorPrefix(message));
+    }
+
+    public void showMoveResult(List<MoveRecord> moveResults) {
+        printer.printLine(OutputFormatter.formatMoveResult(moveResults));
+    }
+
+    public void showTotalResult(BridgeGame bridgeGame) {
+        printer.printWithEmptyLineAhead(OutputFormatter.formatTotalResult(bridgeGame.getMoveResults()));
+        printer.printWithEmptyLineAhead(OutputFormatter.formatSuccessFail(bridgeGame));
+        printer.printLine(OutputFormatter.formatTotalAttemptCount(bridgeGame.getAttemptCount()));
     }
 
 }

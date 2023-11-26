@@ -24,4 +24,16 @@ public class MoveRecord {
         return position.getPosition();
     }
 
+    public boolean matchesDirection(MovingDirection direction) {
+        return this.direction.equals(direction);
+    }
+
+    public String getResultSymbol() {
+        return moveResult.getResultSymbol();
+    }
+
+    public boolean isResultFail() {
+        return this.moveResult.isFail();
+    }
+
 }
