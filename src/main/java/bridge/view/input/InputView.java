@@ -21,7 +21,7 @@ public class InputView {
      * 다리의 길이를 입력받는다.
      */
     public int readBridgeSize() {
-        printer.printLine(InputGuideMessage.BRIDGE_SIZE_INPUT.getMessage());
+        printer.printWithEmptyLineAhead(InputGuideMessage.BRIDGE_SIZE_INPUT.getMessage());
 
         String input = readLine();
         NumericValidator.validateNumeric(input);
@@ -33,7 +33,8 @@ public class InputView {
      * 사용자가 이동할 칸을 입력받는다.
      */
     public String readMovingDirection() {
-        return null;
+        printer.printWithEmptyLineAhead(InputGuideMessage.MOVING_DIRECTION_INPUT.getMessage());
+        return readLine();
     }
 
     /**

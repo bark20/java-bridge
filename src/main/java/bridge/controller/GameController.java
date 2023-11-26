@@ -37,7 +37,7 @@ public class GameController {
         BridgeGame bridgeGame = new BridgeGame(bridge, player);
 
         // 이동칸 입력
-        MovingDirection direction = MovingDirection.ofAbbreviation(inputView.readMovingDirection());
+        MovingDirection direction = input(() -> MovingDirection.ofAbbreviation(inputView.readMovingDirection()));
 
         // 이동
         bridgeGame.move(direction);
