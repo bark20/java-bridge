@@ -1,12 +1,10 @@
 package bridge.view.output;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import bridge.domain.MovePosition;
 import bridge.domain.MoveRecord;
 import bridge.domain.MovingDirection;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
