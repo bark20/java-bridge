@@ -42,4 +42,13 @@ public class Player {
         return Collections.unmodifiableList(records);
     }
 
+    public boolean hasFailed() {
+        return records.stream()
+                .anyMatch(MoveRecord::isResultFail);
+    }
+
+    public boolean hasCrossedAllBridge(Bridge bridge) {
+        return this.currentPosition.isGreaterThan(bridge.getSize());
+    }
+
 }
