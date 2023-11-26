@@ -2,6 +2,8 @@ package bridge.view.input;
 
 // InputView 클래스에서만 camp.nextstep.edu.missionutils.Console 의 readLine() 메서드를 이용해 사용자의 입력을 받을 수 있다.
 
+import bridge.common.utils.validator.NumericValidator;
+import bridge.view.print.Printer;
 import camp.nextstep.edu.missionutils.Console;
 
 /**
@@ -9,11 +11,22 @@ import camp.nextstep.edu.missionutils.Console;
  */
 public class InputView {
 
+    private final Printer printer;
+
+    public InputView(Printer printer) {
+        this.printer = printer;
+    }
+
     /**
      * 다리의 길이를 입력받는다.
      */
     public int readBridgeSize() {
-        return 0;
+        printer.printLine(InputGuideMessage.BRIDGE_SIZE_INPUT.getMessage());
+
+        String input = readLine();
+        NumericValidator.validateNumeric(input);
+
+        return Integer.parseInt(input);
     }
 
     /**
