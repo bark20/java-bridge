@@ -1,6 +1,6 @@
 package bridge;
 
-import bridge.domain.BridgeDirection;
+import bridge.domain.MovingDirection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class BridgeMaker {
         List<String> bridges = new ArrayList<>();
 
         for (int count = 0; count < size; count++) {
-            bridges.add(BridgeDirection.getAbbreviationByDirectionNo(bridgeNumberGenerator.generate()));
+            bridges.add(MovingDirection.getAbbreviationByDirectionNo(bridgeNumberGenerator.generate()));
         }
 
         return bridges;

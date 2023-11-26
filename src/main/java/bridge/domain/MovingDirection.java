@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum BridgeDirection {
+public enum MovingDirection {
 
     UP("U", 1),
     DOWN("D", 0);
@@ -12,13 +12,13 @@ public enum BridgeDirection {
     private final String abbreviation;
     private final int directionNo;
 
-    BridgeDirection(String abbreviation, int directionNo) {
+    MovingDirection(String abbreviation, int directionNo) {
         this.abbreviation = abbreviation;
         this.directionNo = directionNo;
     }
 
     public static String getAbbreviationByDirectionNo(int directionNo) {
-        return Arrays.stream(BridgeDirection.values())
+        return Arrays.stream(MovingDirection.values())
                 .filter(bridgeDirection -> bridgeDirection.matchesDirectionNo(directionNo))
                 .map(bridgeDirection -> bridgeDirection.getAbbreviation())
                 .findFirst()
@@ -28,8 +28,8 @@ public enum BridgeDirection {
                 );
     }
 
-    public static BridgeDirection ofAbbreviation(String abbreviation) {
-        return Arrays.stream(BridgeDirection.values())
+    public static MovingDirection ofAbbreviation(String abbreviation) {
+        return Arrays.stream(MovingDirection.values())
                 .filter(bridgeDirection -> bridgeDirection.matchesAbbreviation(abbreviation))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
@@ -38,9 +38,9 @@ public enum BridgeDirection {
                 );
     }
 
-    public static List<BridgeDirection> toDirections(List<String> abbreviations) {
+    public static List<MovingDirection> toDirections(List<String> abbreviations) {
         return abbreviations.stream()
-                .map(BridgeDirection::ofAbbreviation)
+                .map(MovingDirection::ofAbbreviation)
                 .collect(Collectors.toList());
     }
 

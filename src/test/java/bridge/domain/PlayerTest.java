@@ -15,7 +15,7 @@ class PlayerTest {
         Player player = Player.defaultOf();
 
         // when
-        player.move(BridgeDirection.UP, Bridge.from(List.of("U", "U", "U")));
+        player.move(MovingDirection.UP, Bridge.from(List.of("U", "U", "U")));
 
         // then
         assertThat(player.getCurrentPosition()).isEqualTo(2);
@@ -23,7 +23,7 @@ class PlayerTest {
         List<MoveRecord> records = player.getRecords();
         assertThat(records.get(0))
                 .extracting("position", "direction", "moveResult")
-                .containsExactly(1, BridgeDirection.UP, MoveResult.SUCCESS);
+                .containsExactly(1, MovingDirection.UP, MoveResult.SUCCESS);
     }
 
     @DisplayName("방향에 따라 이동할 수 있다.")
@@ -33,7 +33,7 @@ class PlayerTest {
         Player player = Player.defaultOf();
 
         // when
-        player.move(BridgeDirection.DOWN, Bridge.from(List.of("U", "U", "U")));
+        player.move(MovingDirection.DOWN, Bridge.from(List.of("U", "U", "U")));
 
         // then
         assertThat(player.getCurrentPosition()).isEqualTo(2);
@@ -41,7 +41,7 @@ class PlayerTest {
         List<MoveRecord> records = player.getRecords();
         assertThat(records.get(0))
                 .extracting("position", "direction", "moveResult")
-                .containsExactly(1, BridgeDirection.DOWN, MoveResult.FAIL);
+                .containsExactly(1, MovingDirection.DOWN, MoveResult.FAIL);
     }
 
     @DisplayName("방향에 따라 이동 - 여러번 이동.")
@@ -52,8 +52,8 @@ class PlayerTest {
         Bridge bridge = Bridge.from(List.of("U", "U", "U"));
 
         // when
-        player.move(BridgeDirection.DOWN, bridge);
-        player.move(BridgeDirection.UP, bridge);
+        player.move(MovingDirection.DOWN, bridge);
+        player.move(MovingDirection.UP, bridge);
 
         // then
         assertThat(player.getCurrentPosition()).isEqualTo(3);
@@ -61,11 +61,11 @@ class PlayerTest {
         List<MoveRecord> records = player.getRecords();
         assertThat(records.get(0))
                 .extracting("position", "direction", "moveResult")
-                .containsExactly(1, BridgeDirection.DOWN, MoveResult.FAIL);
+                .containsExactly(1, MovingDirection.DOWN, MoveResult.FAIL);
 
         assertThat(records.get(1))
                 .extracting("position", "direction", "moveResult")
-                .containsExactly(2, BridgeDirection.UP, MoveResult.SUCCESS);
+                .containsExactly(2, MovingDirection.UP, MoveResult.SUCCESS);
     }
 
 }

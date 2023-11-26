@@ -4,21 +4,21 @@ import java.util.List;
 
 public class Bridge {
 
-    private final List<BridgeDirection> directions;
+    private final List<MovingDirection> directions;
 
-    public Bridge(List<BridgeDirection> directions) {
+    public Bridge(List<MovingDirection> directions) {
         this.directions = directions;
     }
 
     public static Bridge from(List<String> directionAbbreviations) {
-        return new Bridge(BridgeDirection.toDirections(directionAbbreviations));
+        return new Bridge(MovingDirection.toDirections(directionAbbreviations));
     }
 
-    public boolean matchesDirection(MovePosition position, BridgeDirection direction) {
+    public boolean matchesDirection(MovePosition position, MovingDirection direction) {
         return directions.get(position.getPosition() - 1) == direction;
     }
 
-    public List<BridgeDirection> getDirections() {
+    public List<MovingDirection> getDirections() {
         return directions;
     }
 

@@ -17,12 +17,12 @@ public class Player {
         return new Player(MovePosition.defaultOf());
     }
 
-    public void move(BridgeDirection direction, Bridge bridge) {
+    public void move(MovingDirection direction, Bridge bridge) {
         addRecord(direction, bridge);
         moveNextPosition();
     }
 
-    private void addRecord(BridgeDirection direction, Bridge bridge) {
+    private void addRecord(MovingDirection direction, Bridge bridge) {
         if (bridge.matchesDirection(currentPosition, direction)) {
             records.add(MoveRecord.successRecord(currentPosition, direction));
             return;
