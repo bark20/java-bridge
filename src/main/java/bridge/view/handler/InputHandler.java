@@ -2,14 +2,17 @@ package bridge.view.handler;
 
 import bridge.domain.Bridge;
 import bridge.domain.BridgeMaker;
+import bridge.view.ErrorView;
 import bridge.view.InputView;
 import java.util.function.Supplier;
 
 public class InputHandler {
     private final InputView inputView;
+    private final ErrorView errorView;
 
-    public InputHandler(InputView inputView) {
+    public InputHandler(InputView inputView, ErrorView errorView) {
         this.inputView = inputView;
+        this.errorView = errorView;
     }
 
     public Bridge createValidatedBridge(BridgeMaker bridgeMaker) {
@@ -32,7 +35,7 @@ public class InputHandler {
             try {
                 return inputView.get();
             } catch (IllegalArgumentException exception) {
-                System.out.println(exception.getMessage());
+                errorView.printErrorMessage(exception.getMessage());
             }
         }
     }
