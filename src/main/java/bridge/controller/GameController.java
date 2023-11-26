@@ -23,23 +23,12 @@ public class GameController {
     }
 
     public void run() {
-        // welcome
         outputView.welcomePlayer();
 
-        // 브릿지 사이즈 입력
-        BridgeSize bridgeSize = input(() -> BridgeSize.from(inputView.readBridgeSize()));
-
-        // 다리 생성
-        BridgeMaker maker = new BridgeMaker(new BridgeRandomNumberGenerator());
-        Bridge bridge = Bridge.from(maker.makeBridge(bridgeSize.getSize()));
-
-        // 게임 생성
-        BridgeGame bridgeGame = BridgeGame.defaultOf(bridge);
+        BridgeGame bridgeGame = setUpBridgeGame();
 
         while (bridgeGame.isOnGoing()) {
-            MovingDirection direction = input(() -> MovingDirection.ofAbbreviation(inputView.readMovingDirection()));
-            bridgeGame.move(direction);
-            outputView.showMoveResult(bridgeGame.getMoveResults());
+            movePosition(bridgeGame);
 
             // 게임이 완전히 끝났으면 결과 출력
             if (bridgeGame.isFinished()) {
@@ -63,6 +52,26 @@ public class GameController {
             }
         }
 
+    }
+
+    private void movePosition(BridgeGame bridgeGame) {
+        bridgeGame.move(inputMovingDirection());
+        outputView.showMoveResult(bridgeGame.getMoveResults());
+    }
+
+    private MovingDirection inputMovingDirection() {
+        return input(() -> MovingDirection.ofAbbreviation(inputView.readMovingDirection()));
+    }
+
+    private BridgeGame setUpBridgeGame() {
+        BridgeMaker maker = new BridgeMaker(new BridgeRandomNumberGenerator());
+        BridgeSize bridgeSize = inputBridgeSize();
+
+        return BridgeGame.defaultOf(Bridge.from(maker.makeBridge(bridgeSize.getSize())));
+    }
+
+    private BridgeSize inputBridgeSize() {
+        return input(() -> BridgeSize.from(inputView.readBridgeSize()));
     }
 
     public <T> T input(Supplier<T> supplier) {
