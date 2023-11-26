@@ -24,25 +24,25 @@ public class GameController {
     public void run() {
         outputView.welcomePlayer();
 
-        BridgeGame bridgeGame = setUpBridgeGame();
+        BridgeGame bridgeGame = setUpBridgeGame(inputBridgeSize());
 
         while (bridgeGame.isOnGoing()) {
-            movePosition(bridgeGame);
+            playRound(bridgeGame);
+            confirmRetry(bridgeGame);
+        }
 
-            if (bridgeGame.isFinished()) {
-                outputView.showTotalResult(bridgeGame);
-                break;
-            }
+        outputView.showTotalResult(bridgeGame);
+    }
 
-            if (bridgeGame.isStopped()) {
-                if (inputRetryOrNot().isRetry()) {
-                    bridgeGame.retry();
-                    continue;
-                }
+    private void confirmRetry(BridgeGame bridgeGame) {
+        if (bridgeGame.isStopped()) {
+            retryByInput(bridgeGame);
+        }
+    }
 
-                outputView.showTotalResult(bridgeGame);
-                break;
-            }
+    private void retryByInput(BridgeGame bridgeGame) {
+        if (inputRetryOrNot().isRetry()) {
+            bridgeGame.retry();
         }
     }
 
@@ -50,7 +50,7 @@ public class GameController {
         return input(() -> GameCommand.ofAbbreviation(inputView.readGameCommand()));
     }
 
-    private void movePosition(BridgeGame bridgeGame) {
+    private void playRound(BridgeGame bridgeGame) {
         bridgeGame.move(inputMovingDirection());
         outputView.showMoveResult(bridgeGame.getMoveResults());
     }
@@ -59,9 +59,8 @@ public class GameController {
         return input(() -> MovingDirection.ofAbbreviation(inputView.readMovingDirection()));
     }
 
-    private BridgeGame setUpBridgeGame() {
+    private BridgeGame setUpBridgeGame(BridgeSize bridgeSize) {
         BridgeMaker maker = new BridgeMaker(new BridgeRandomNumberGenerator());
-        BridgeSize bridgeSize = inputBridgeSize();
 
         return BridgeGame.defaultOf(Bridge.from(maker.makeBridge(bridgeSize.getSize())));
     }
@@ -70,7 +69,7 @@ public class GameController {
         return input(() -> BridgeSize.from(inputView.readBridgeSize()));
     }
 
-    public <T> T input(Supplier<T> supplier) {
+    private <T> T input(Supplier<T> supplier) {
         try {
             return supplier.get();
         } catch (IllegalArgumentException e) {
