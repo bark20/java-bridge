@@ -64,5 +64,7 @@ class ApplicationTest extends NsTest {
         public int generate() {
             return numbers.remove(0);
         }
+
     }
+
 }
