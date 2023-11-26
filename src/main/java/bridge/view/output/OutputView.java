@@ -37,4 +37,8 @@ public class OutputView {
         printer.printEmptyLine();
     }
 
+    public void showErrorMessage(String message) {
+        printer.printLine(ErrorMessageFormatter.addErrorPrefix(message));
+    }
+
 }
