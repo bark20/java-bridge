@@ -1,4 +1,8 @@
-package bridge;
+package bridge.view.input;
+
+// InputView 클래스에서만 camp.nextstep.edu.missionutils.Console 의 readLine() 메서드를 이용해 사용자의 입력을 받을 수 있다.
+
+import camp.nextstep.edu.missionutils.Console;
 
 /**
  * 사용자로부터 입력을 받는 역할을 한다.
@@ -15,7 +19,7 @@ public class InputView {
     /**
      * 사용자가 이동할 칸을 입력받는다.
      */
-    public String readMoving() {
+    public String readMovingDirection() {
         return null;
     }
 
@@ -25,4 +29,9 @@ public class InputView {
     public String readGameCommand() {
         return null;
     }
+
+    public String readLine() {
+        return Console.readLine().trim();
+    }
+
 }
