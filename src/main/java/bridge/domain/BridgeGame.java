@@ -68,10 +68,6 @@ public class BridgeGame {
         return this.status.isOnGoing();
     }
 
-    public boolean isFinished() {
-        return this.status.isFinished();
-    }
-
     public boolean isStopped() {
         return this.status.isStopped();
     }
