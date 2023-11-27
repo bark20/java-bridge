@@ -7,6 +7,8 @@ import java.util.List;
  */
 public class BridgeGame {
 
+    private static final int INITIAL_ATTEMPT_COUNT = 1;
+
     private GameStatus status;
     private int attemptCount;
     private final Bridge bridge;
@@ -20,7 +22,7 @@ public class BridgeGame {
     }
 
     public static BridgeGame defaultOf(Bridge bridge) {
-        return new BridgeGame(GameStatus.ON_GOING, 1, bridge, Player.defaultOf());
+        return new BridgeGame(GameStatus.ON_GOING, INITIAL_ATTEMPT_COUNT, bridge, Player.defaultOf());
     }
 
     /**
