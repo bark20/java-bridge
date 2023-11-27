@@ -2,6 +2,7 @@ package bridge;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import bridge.domain.MovingDirection;
 import java.util.List;
 import mock.FakeBridgeNumberGenerator;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +14,7 @@ class BridgeMakerTest {
     @Test
     void makeBridgeU() {
         // given
-        BridgeMaker maker = new BridgeMaker(new FakeBridgeNumberGenerator(1));
+        BridgeMaker maker = new BridgeMaker(new FakeBridgeNumberGenerator(MovingDirection.UP.getDirectionNo()));
 
         // when
         List<String> bridges = maker.makeBridge(3);
@@ -28,7 +29,7 @@ class BridgeMakerTest {
     @Test
     void makeBridgeD() {
         // given
-        BridgeMaker maker = new BridgeMaker(new FakeBridgeNumberGenerator(0));
+        BridgeMaker maker = new BridgeMaker(new FakeBridgeNumberGenerator(MovingDirection.DOWN.getDirectionNo()));
 
         // when
         List<String> bridges = maker.makeBridge(3);

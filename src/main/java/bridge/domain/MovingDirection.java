@@ -56,4 +56,8 @@ public enum MovingDirection {
         return abbreviation;
     }
 
+    public int getDirectionNo() {
+        return directionNo;
+    }
+
 }
