@@ -13,8 +13,8 @@ public class BridgeNode {
         this.position = position;
     }
 
-    static BridgeNode create(final String symbol, final int position) {
-        return new BridgeNode(MoveDirection.findBySymbol(symbol), position);
+    static BridgeNode create(final MoveDirection direction, final int position) {
+        return new BridgeNode(direction, position);
     }
 
     MoveResult compare(final BridgeNode other) {
@@ -39,5 +39,13 @@ public class BridgeNode {
     @Override
     public int hashCode() {
         return Objects.hash(direction, position);
+    }
+
+    @Override
+    public String toString() {
+        return "BridgeNode{" +
+                "direction=" + direction +
+                ", position=" + position +
+                '}';
     }
 }

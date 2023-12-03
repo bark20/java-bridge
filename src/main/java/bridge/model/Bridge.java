@@ -15,7 +15,8 @@ public class Bridge {
         final List<BridgeNode> bridgeNodes = new ArrayList<>();
 
         for (int i = 0; i < symbols.size(); i++) {
-            bridgeNodes.add(BridgeNode.create(symbols.get(i), i));
+            final MoveDirection moveDirection = MoveDirection.findBySymbol(symbols.get(i));
+            bridgeNodes.add(BridgeNode.create(moveDirection, i));
         }
         return bridgeNodes;
     }
@@ -30,5 +31,12 @@ public class Bridge {
                 .filter(MoveResult::isPass)
                 .findFirst()
                 .orElse(MoveResult.FAIL);
+    }
+
+    @Override
+    public String toString() {
+        return "Bridge{" +
+                "nodes=" + nodes +
+                '}';
     }
 }
