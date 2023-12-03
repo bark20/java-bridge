@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public enum GameCommand {
 
-    RESTART("R"),
+    RETRY("R"),
     QUIT("Q");
 
     private static final Map<String, GameCommand> codeToCommand = Arrays.stream(values())
@@ -34,7 +34,7 @@ public enum GameCommand {
         return gameCommand.get();
     }
 
-    public boolean isRestart() {
-        return this == RESTART;
+    public boolean isRetry() {
+        return this == RETRY;
     }
 }
