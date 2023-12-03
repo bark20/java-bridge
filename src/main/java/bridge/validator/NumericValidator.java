@@ -1,5 +1,8 @@
 package bridge.validator;
 
+import static bridge.exception.ErrorType.*;
+
+import bridge.exception.ErrorType;
 import java.util.regex.Pattern;
 
 public class NumericValidator {
@@ -13,7 +16,7 @@ public class NumericValidator {
 
     public static void validate(final String stringNumber) {
         if (isNullOrEmpty(stringNumber) || !isNumeric(stringNumber)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INVALID_NUMBER_FORMAT.getMessage());
         }
     }
 

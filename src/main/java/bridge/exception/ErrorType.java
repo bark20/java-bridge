@@ -3,7 +3,8 @@ package bridge.exception;
 public enum ErrorType {
 
     INVALID_MOVE_DIRECTION("U(위 칸)와 D(아래 칸) 중 하나의 문자만 입력할 수 있습니다."),
-    INVALID_BRIDGE_SIZE("다리 길이는 3부터 20 사이의 숫자여야 합니다.");
+    INVALID_BRIDGE_SIZE("다리 길이는 3부터 20 사이의 숫자여야 합니다."),
+    INVALID_NUMBER_FORMAT("다리의 길이는 숫자만 입력 가능합니다.");
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 
