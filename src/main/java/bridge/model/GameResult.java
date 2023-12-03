@@ -44,4 +44,10 @@ public class GameResult {
                 .map(MoveResult::getSymbol)
                 .collect(Collectors.toList());
     }
+
+    public void clear() {
+        for (final BridgeType bridgeType : moveResults.keySet()) {
+            moveResults.get(bridgeType).clear();
+        }
+    }
 }

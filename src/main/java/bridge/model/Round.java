@@ -17,13 +17,17 @@ public class Round {
         return new Round(INITIAL_ROUND, numberOfRound);
     }
 
-    int current() {
-        return current;
-    }
-
     Round next() {
         final int nextRound = Math.min(current + 1, numberOfRound);
         return new Round(nextRound, numberOfRound);
+    }
+
+    public Round reset() {
+        return new Round(INITIAL_ROUND, numberOfRound);
+    }
+
+    int current() {
+        return current;
     }
 
     boolean isLast() {
