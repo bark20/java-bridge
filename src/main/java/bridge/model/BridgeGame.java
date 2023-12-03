@@ -46,4 +46,8 @@ public class BridgeGame {
         round = round.reset();
         gameResult.clear();
     }
+
+    public int tryCount() {
+        return gameResult.tryCount();
+    }
 }

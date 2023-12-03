@@ -7,15 +7,20 @@ import java.util.stream.Collectors;
 
 public class GameResult {
 
+    private static final int INITIAL_TRY_COUNT = 1;
+
     private final EnumMap<BridgeType, List<MoveResult>> moveResults;
 
-    public GameResult() {
+    private int tryCount;
+
+    GameResult() {
+        this.tryCount = INITIAL_TRY_COUNT;
         this.moveResults = new EnumMap<>(BridgeType.class);
         moveResults.put(BridgeType.LEFT, new ArrayList<>());
         moveResults.put(BridgeType.RIGHT, new ArrayList<>());
     }
 
-    public void report(final MoveDirection direction, final MoveResult moveResult) {
+    void report(final MoveDirection direction, final MoveResult moveResult) {
         if (direction == MoveDirection.UP) {
             addResult(BridgeType.LEFT, moveResult);
             addResult(BridgeType.RIGHT, MoveResult.NONE);
@@ -29,7 +34,7 @@ public class GameResult {
         moveResults.get(type).add(moveResult);
     }
 
-    public boolean isAllPass() {
+    boolean isAllPass() {
         return moveResults.values().stream().allMatch(GameResult::isAllPassOf);
     }
 
@@ -45,9 +50,14 @@ public class GameResult {
                 .collect(Collectors.toList());
     }
 
-    public void clear() {
+    void clear() {
         for (final BridgeType bridgeType : moveResults.keySet()) {
             moveResults.get(bridgeType).clear();
         }
+        tryCount += 1;
+    }
+
+    int tryCount() {
+        return tryCount;
     }
 }
