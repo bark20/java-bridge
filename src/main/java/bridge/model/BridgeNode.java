@@ -40,12 +40,4 @@ public class BridgeNode {
     public int hashCode() {
         return Objects.hash(direction, position);
     }
-
-    @Override
-    public String toString() {
-        return "BridgeNode{" +
-                "direction=" + direction +
-                ", position=" + position +
-                '}';
-    }
 }

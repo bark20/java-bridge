@@ -32,11 +32,4 @@ public class Bridge {
                 .findFirst()
                 .orElse(MoveResult.FAIL);
     }
-
-    @Override
-    public String toString() {
-        return "Bridge{" +
-                "nodes=" + nodes +
-                '}';
-    }
 }
