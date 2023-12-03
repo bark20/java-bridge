@@ -20,11 +20,11 @@ public class Bridge {
         return bridgeNodes;
     }
 
-    public static Bridge withSymbols(final List<String> symbols) {
+    static Bridge withSymbols(final List<String> symbols) {
         return new Bridge(symbols);
     }
 
-    public MoveResult move(final BridgeNode other) {
+    MoveResult move(final BridgeNode other) {
         return nodes.stream()
                 .map(node -> node.compare(other))
                 .filter(MoveResult::isPass)
