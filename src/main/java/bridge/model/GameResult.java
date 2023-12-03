@@ -7,14 +7,14 @@ import java.util.stream.Collectors;
 
 public class GameResult {
 
-    private static final int INITIAL_TRY_COUNT = 1;
+    private static final int INITIAL_COUNT = 1;
 
     private final EnumMap<BridgeType, List<MoveResult>> moveResults;
 
-    private int tryCount;
+    private TryCount tryCount;
 
     GameResult() {
-        this.tryCount = INITIAL_TRY_COUNT;
+        this.tryCount = new TryCount(INITIAL_COUNT);
         this.moveResults = new EnumMap<>(BridgeType.class);
         moveResults.put(BridgeType.LEFT, new ArrayList<>());
         moveResults.put(BridgeType.RIGHT, new ArrayList<>());
@@ -54,10 +54,10 @@ public class GameResult {
         for (final BridgeType bridgeType : moveResults.keySet()) {
             moveResults.get(bridgeType).clear();
         }
-        tryCount += 1;
+        tryCount = tryCount.increase();
     }
 
     int tryCount() {
-        return tryCount;
+        return tryCount.intValue();
     }
 }
