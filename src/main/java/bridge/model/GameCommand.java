@@ -34,7 +34,7 @@ public enum GameCommand {
         return gameCommand.get();
     }
 
-    public boolean isRetry() {
-        return this == RETRY;
+    public boolean isQuit() {
+        return this == QUIT;
     }
 }
