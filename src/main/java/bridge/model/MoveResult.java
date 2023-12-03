@@ -3,7 +3,8 @@ package bridge.model;
 public enum MoveResult {
 
     PASS("O"),
-    FAIL("X");
+    FAIL("X"),
+    NONE(" ");
 
     private final String symbol;
 
@@ -17,5 +18,13 @@ public enum MoveResult {
 
     public boolean isFail() {
         return this == FAIL;
+    }
+
+    public boolean isNone() {
+        return this == NONE;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 }

@@ -24,13 +24,17 @@ public class BridgeGame {
      */
     public MoveResult move(final MoveDirection direction) {
         final MoveResult moveResult = bridge.move(BridgeNode.create(direction, round.current()));
-        gameResult.report(moveResult);
+        gameResult.report(direction, moveResult);
         round = round.next();
         return moveResult;
     }
 
     public boolean isClear() {
         return round.isLast() && gameResult.isAllPass();
+    }
+
+    public GameResult getResult() {
+        return gameResult;
     }
 
     /**

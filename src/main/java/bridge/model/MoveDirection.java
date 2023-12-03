@@ -24,7 +24,7 @@ public enum MoveDirection {
         this.symbol = symbol;
     }
 
-    static MoveDirection findBySymbol(final String symbol) {
+    public static MoveDirection findBySymbol(final String symbol) {
         final Optional<MoveDirection> direction
                 = Optional.ofNullable(symbolToDirection.get(symbol));
 
