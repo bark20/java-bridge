@@ -33,4 +33,8 @@ public enum MoveDirection {
         }
         return direction.get();
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }
