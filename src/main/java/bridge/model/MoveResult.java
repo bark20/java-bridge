@@ -12,19 +12,19 @@ public enum MoveResult {
         this.symbol = symbol;
     }
 
-    public boolean isPass() {
+    boolean isPass() {
         return this == PASS;
+    }
+
+    boolean isNone() {
+        return this == NONE;
+    }
+
+    String getSymbol() {
+        return symbol;
     }
 
     public boolean isFail() {
         return this == FAIL;
-    }
-
-    public boolean isNone() {
-        return this == NONE;
-    }
-
-    public String getSymbol() {
-        return symbol;
     }
 }

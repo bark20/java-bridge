@@ -44,12 +44,6 @@ public class GameResult {
                 .allMatch(MoveResult::isPass);
     }
 
-    public List<String> getResultOf(BridgeType type) {
-        return moveResults.get(type).stream()
-                .map(MoveResult::getSymbol)
-                .collect(Collectors.toList());
-    }
-
     void clear() {
         for (final BridgeType bridgeType : moveResults.keySet()) {
             moveResults.get(bridgeType).clear();
@@ -59,5 +53,11 @@ public class GameResult {
 
     int tryCount() {
         return tryCount.intValue();
+    }
+
+    public List<String> getResultOf(BridgeType type) {
+        return moveResults.get(type).stream()
+                .map(MoveResult::getSymbol)
+                .collect(Collectors.toList());
     }
 }

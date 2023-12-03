@@ -22,7 +22,7 @@ public class Round {
         return new Round(nextRound, numberOfRound);
     }
 
-    public Round reset() {
+    Round reset() {
         return new Round(INITIAL_ROUND, numberOfRound);
     }
 
@@ -32,13 +32,5 @@ public class Round {
 
     boolean isLast() {
         return current == numberOfRound;
-    }
-
-    @Override
-    public String toString() {
-        return "Round{" +
-                "numberOfRound=" + numberOfRound +
-                ", current=" + current +
-                '}';
     }
 }
