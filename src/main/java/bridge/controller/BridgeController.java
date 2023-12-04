@@ -18,22 +18,26 @@ public class BridgeController {
     public void process() {
         int bridgeSize = inputView.readBridgeSize();
         List<String> bridge = bridgeMaker.makeBridge(bridgeSize);
-        int currentPosition = 0;
-        while (currentPosition != bridgeSize) {
-            String movingDirection = inputView.readMoving();
-            outputView.printMap(bridge, currentPosition, movingDirection);
+        bridgeGame.setBridge(bridge);
 
-            if (bridge.get(currentPosition).equals(movingDirection)) {
-                currentPosition++;
+        outputView.printGameStart();
+
+        while (true) {
+            String direction = inputView.readMoving();
+
+            if (bridgeGame.move(direction)) {
+                outputView.printMap(bridgeGame);
+                if (bridgeGame.checkGameIsFinish())
+                    break;
                 continue;
             }
-
+            outputView.printMap(bridgeGame);
             if (inputView.readGameCommand().equals(Command.R.name())) {
-                currentPosition = 0;
+                bridgeGame.retry();
                 continue;
             }
             break;
         }
-        outputView.printResult();
+        outputView.printResult(bridgeGame, bridgeGame.checkGameIsFinish());
     }
 }
