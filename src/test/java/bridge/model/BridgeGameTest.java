@@ -15,8 +15,8 @@ class BridgeGameTest {
     void move(){
         BridgeGame bridgeGame = new BridgeGame(new Bridge(List.of("U","D","D")));
         assertAll(
-                () -> assertThat(bridgeGame.move("U")).isEqualTo("O"),
-                () -> assertThat(bridgeGame.move("U")).isEqualTo("X")
+                () -> assertThat(bridgeGame.move("U")).isEqualTo(BridgeStructure.SUCCESS),
+                () -> assertThat(bridgeGame.move("U")).isEqualTo(BridgeStructure.FAIL)
         );
 
     }
