@@ -18,6 +18,16 @@ class BridgeGameTest {
                 () -> assertThat(bridgeGame.move("U")).isEqualTo(BridgeStructure.SUCCESS),
                 () -> assertThat(bridgeGame.move("U")).isEqualTo(BridgeStructure.FAIL)
         );
+    }
+
+    @Test
+    @DisplayName("사용자가 게임을 재시작할지 아닐지 알 수 있다.")
+    void retry(){
+        BridgeGame bridgeGame = new BridgeGame(new Bridge(List.of("U","D","D")));
+        assertAll(
+                () -> assertThat(bridgeGame.retry("R")).isTrue(),
+                () -> assertThat(bridgeGame.retry("Q")).isFalse()
+        );
 
     }
 
