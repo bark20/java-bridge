@@ -26,7 +26,11 @@ public class InputView {
      * 사용자가 이동할 칸을 입력받는다.
      */
     public String readMoving() {
-        return null;
+        System.out.println("이동할 칸을 선택해주세요. (위: U, 아래: D)");
+        String moving = Console.readLine();
+        validateNullAndEmpty(moving);
+        validateSingleLetter(moving);
+        return moving;
     }
 
     /**
@@ -44,7 +48,13 @@ public class InputView {
 
     private void validateNumeric(String input) {
         if (!NUMERIC_PATTERN.matcher(input).matches()) {
-            throw new IllegalArgumentException("문자열이 숫자로 이루어져 있지 않습니다.");
+            throw new IllegalArgumentException("문자열이 숫자로만 이루어져 있지 않습니다.");
+        }
+    }
+
+    private void validateSingleLetter(String input) {
+        if (input.length() != 1) {
+            throw new IllegalArgumentException("문자열의 크기는 한개로 이루어져야 합니다.");
         }
     }
 }
