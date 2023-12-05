@@ -2,6 +2,7 @@ package bridge.model;
 
 import bridge.BridgeNumberGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,11 @@ public class BridgeMaker {
      */
     public List<String> makeBridge(int size) {
         validateSize(size);
-        return null;
+        List<String> bridge = new ArrayList<>();
+        for(int i = 0; i < size; i++){
+            bridge.add(BridgeUnit.of(bridgeNumberGenerator.generate()).getSignatureLetter());
+        }
+        return bridge;
     }
 
     private void validateSize(int size){
