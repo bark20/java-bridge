@@ -1,8 +1,6 @@
 package bridge.model;
 
 public enum BridgeStructure {
-    SUCCESS("O"),
-    FAIL("X"),
     START("["),
     END("]"),
     MIDDLE("|")

@@ -15,10 +15,21 @@ public enum BridgeUnit {
         this.signatureNumber = signatureNumber;
     }
 
+    public String getSignatureLetter() {
+        return signatureLetter;
+    }
+
     public static BridgeUnit of(int signatureNumber) {
         return Arrays.stream(values())
                 .filter(bridgeUnit -> bridgeUnit.signatureNumber == signatureNumber)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("전달된 숫자에 해당하는 칸이 없습니다."));
+    }
+
+    public static BridgeUnit of(String signatureLetter) {
+        return Arrays.stream(values())
+                .filter(bridgeUnit -> bridgeUnit.signatureLetter == signatureLetter)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("전달된 문자에 해당하는 칸이 없습니다."));
     }
 }
