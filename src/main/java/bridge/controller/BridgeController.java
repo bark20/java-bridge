@@ -51,7 +51,7 @@ public class BridgeController {
 
     private void restartOrQuit() {
         GameCommand gameCommand = repeatReadForInvalid(this::getGameCommand);
-        if (gameCommand == GameCommand.RESTART) {
+        if (gameCommand.isRestart()) {
             bridgeGame.retry();
         }
     }

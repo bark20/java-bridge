@@ -21,6 +21,10 @@ public enum GameCommand {
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_GAME_COMMAND.getMessage()));
     }
 
+    public boolean isRestart() {
+        return this == RESTART;
+    }
+
     public String getName() {
         return name;
     }
