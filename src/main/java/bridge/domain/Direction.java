@@ -1,5 +1,6 @@
 package bridge.domain;
 
+import bridge.error.ErrorMessage;
 import java.util.Arrays;
 
 public enum Direction {
@@ -19,7 +20,7 @@ public enum Direction {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.name.equals(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException()); // TODO 예외 메시지
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_DIRECTION.getMessage()));
     }
 
     public String getName() {
