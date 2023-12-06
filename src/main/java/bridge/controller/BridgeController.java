@@ -4,6 +4,7 @@ import bridge.BridgeGame;
 import bridge.BridgeMaker;
 import bridge.BridgeRandomNumberGenerator;
 import bridge.domain.Direction;
+import bridge.domain.GameCommand;
 import bridge.domain.MovingStatus;
 import bridge.view.InputView;
 import bridge.view.OutputView;
@@ -21,12 +22,21 @@ public class BridgeController {
 
         BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
         List<String> bridge = bridgeMaker.makeBridge(bridgeSize);
+        System.out.println("bridge = " + bridge);
 
         BridgeGame bridgeGame = new BridgeGame(bridge, new MovingStatus());
         while (bridgeGame.canMove()) {
             Direction movingDirection = Direction.of(InputView.readMoving());
             MovingStatus movingStatus = bridgeGame.move(movingDirection);
             OutputView.printMap(movingStatus.getMovingDirections(), movingStatus.getCanCrosses());
+            if (movingStatus.cannotCross()) {
+                GameCommand gameCommand = GameCommand.of(InputView.readGameCommand());
+                if (gameCommand == GameCommand.RESTART) {
+                    bridgeGame.retry();
+                    continue;
+                }
+                break;
+            }
         }
     }
 }

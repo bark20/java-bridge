@@ -19,6 +19,7 @@ public class MovingStatus {
 
     public void clear() {
         movingDirections.clear();
+        canCrosses.clear();
     }
 
     public boolean cannotCross() {
