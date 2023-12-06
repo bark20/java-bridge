@@ -14,18 +14,22 @@ import java.util.function.Supplier;
 
 public class BridgeController {
 
+    private final BridgeGame bridgeGame;
+
+    public BridgeController(BridgeGame bridgeGame) {
+        this.bridgeGame = bridgeGame;
+    }
+
     public void run() {
         OutputView.printStartMessage();
 
         int bridgeSize = repeatReadForInvalid(this::getBridgeSize);
 
-        BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
-        List<String> bridge = bridgeMaker.makeBridge(bridgeSize);
+        List<String> bridge = bridgeGame.makeBridge(bridgeSize);
 
-        BridgeGame bridgeGame = new BridgeGame(bridge, new MovingStatus());
-        while (bridgeGame.canMove()) {
+        while (bridgeGame.canMove(bridge)) {
             Direction movingDirection = repeatReadForInvalid(this::getDirection);
-            MovingStatus movingStatus = bridgeGame.move(movingDirection);
+            MovingStatus movingStatus = bridgeGame.move(bridge, movingDirection);
             OutputView.printMap(movingStatus.formatMovingStatus());
             if (movingStatus.cannotCross()) {
                 GameCommand gameCommand = repeatReadForInvalid(this::getGameCommand);
