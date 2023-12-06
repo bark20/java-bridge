@@ -33,7 +33,7 @@ public class InputView {
     public static String readMoving() {
         System.out.println("이동할 칸을 선택해주세요. (위: U, 아래: D)"); // TODO Direction 사용
         String input = Console.readLine();
-        if (MOVING_INPUT_REGEX.matcher(input).matches()) {
+        if (!MOVING_INPUT_REGEX.matcher(input).matches()) {
             throw new IllegalArgumentException(); // TODO 예외 메시지
         }
         return input; // TODO Direction return
@@ -45,7 +45,7 @@ public class InputView {
     public static String readGameCommand() {
         System.out.println("게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)"); // TODO GameCommand 사용
         String input = Console.readLine();
-        if (GAME_COMMAND_INPUT_REGEX.matcher(input).matches()) {
+        if (!GAME_COMMAND_INPUT_REGEX.matcher(input).matches()) {
             throw new IllegalArgumentException(); // TODO 예외 메시지
         }
         return input; // TODO GameCommand return
