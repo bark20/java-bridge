@@ -38,4 +38,8 @@ public class BridgeGame {
         moveCount = 0;
         tryCount++;
     }
+
+    public boolean hasMovedAll() {
+        return moveCount == bridge.size();
+    }
 }
