@@ -1,6 +1,7 @@
 package bridge;
 
 import bridge.domain.Direction;
+import bridge.domain.MovingStatus;
 import java.util.List;
 
 /**
@@ -9,13 +10,17 @@ import java.util.List;
 public class BridgeGame {
 
     private final List<String> bridge;
-    private int moveCount;
+    private final MovingStatus movingStatus;
     private int tryCount;
 
-    public BridgeGame(List<String> bridge) {
+    public BridgeGame(List<String> bridge, MovingStatus movingStatus) {
         this.bridge = bridge;
-        this.moveCount = 0;
+        this.movingStatus = movingStatus;
         this.tryCount = 1;
+    }
+
+    public boolean canMove() {
+        return movingStatus.count() < bridge.size();
     }
 
     /**
@@ -24,9 +29,9 @@ public class BridgeGame {
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public boolean move(Direction direction) {
-        boolean movable = bridge.get(moveCount).equals(direction.getName());
-        moveCount++;
-        return movable;
+        boolean canCross = bridge.get(movingStatus.count()).equals(direction.getName());
+        movingStatus.add(direction);
+        return canCross;
     }
 
     /**
@@ -35,11 +40,11 @@ public class BridgeGame {
      * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public void retry() {
-        moveCount = 0;
+        movingStatus.clear();
         tryCount++;
     }
 
     public boolean hasMovedAll() {
-        return moveCount == bridge.size();
+        return movingStatus.count() == bridge.size();
     }
 }
