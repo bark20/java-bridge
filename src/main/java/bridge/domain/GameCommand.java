@@ -1,5 +1,6 @@
 package bridge.domain;
 
+import bridge.error.ErrorMessage;
 import java.util.Arrays;
 
 public enum GameCommand {
@@ -17,7 +18,7 @@ public enum GameCommand {
         return Arrays.stream(GameCommand.values())
                 .filter(gameCommand -> gameCommand.name.equals(name))
                 .findFirst()
-                .orElseThrow(); // TODO 예외 메시지
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_GAME_COMMAND.getMessage()));
     }
 
     public String getName() {
