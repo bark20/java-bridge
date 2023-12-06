@@ -15,11 +15,11 @@ public class BridgeGame {
      * <p>
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public BridgeStructure move(String bridgeUnitLetter) {
+    public Crossing move(String bridgeUnitLetter) {
         if(bridge.cross(bridgeUnitLetter)){
-            return BridgeStructure.SUCCESS;
+            return Crossing.SUCCESS;
         }
-        return BridgeStructure.FAIL;
+        return Crossing.FAIL;
     }
 
     /**
@@ -29,5 +29,9 @@ public class BridgeGame {
      */
     public boolean retry(String decision) {
         return BridgeGameDecision.of(decision).equals(BridgeGameDecision.RETRY);
+    }
+
+    public boolean finish(){
+        return bridge.end();
     }
 }
