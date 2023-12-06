@@ -1,7 +1,10 @@
 package bridge.controller;
 
+import bridge.BridgeGame;
 import bridge.BridgeMaker;
 import bridge.BridgeRandomNumberGenerator;
+import bridge.domain.Direction;
+import bridge.domain.MovingStatus;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 import java.util.List;
@@ -18,5 +21,12 @@ public class BridgeController {
 
         BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
         List<String> bridge = bridgeMaker.makeBridge(bridgeSize);
+
+        BridgeGame bridgeGame = new BridgeGame(bridge, new MovingStatus());
+        while (bridgeGame.canMove()) {
+            Direction movingDirection = Direction.of(InputView.readMoving());
+            MovingStatus movingStatus = bridgeGame.move(movingDirection);
+            OutputView.printMap(movingStatus.getMovingDirections(), movingStatus.getCanCrosses());
+        }
     }
 }

@@ -1,5 +1,6 @@
 package bridge.view;
 
+import bridge.domain.Direction;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -21,19 +22,31 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public static void printMap(List<String> upMovingResults, List<String> downMovingResults) {
-        StringBuilder bridgeStatus = new StringBuilder();
-        bridgeStatus.append(formatStatus(upMovingResults));
-        bridgeStatus.append(formatStatus(downMovingResults));
-        System.out.println(bridgeStatus);
-    }
-
-    private static String formatStatus(List<String> movingResults) {
-        StringJoiner stringJoiner = new StringJoiner(" | ", "[ ", " ]\n");
-        for (String result : movingResults) {
-            stringJoiner.add(result);
+    public static void printMap(List<Direction> movingDirections, List<Boolean> canCrosses) {
+        StringJoiner up = new StringJoiner(" | ", "[ ", " ]");
+        StringJoiner down = new StringJoiner(" | ", "[ ", " ]");
+        for (int i = 0; i < movingDirections.size(); i++) {
+            if (movingDirections.get(i) == Direction.UP) {
+                if (canCrosses.get(i)) {
+                    up.add("O");
+                    down.add(" ");
+                    continue;
+                }
+                up.add("X");
+                down.add(" ");
+                continue;
+            }
+            if (canCrosses.get(i)) {
+                down.add("O");
+                up.add(" ");
+                continue;
+            }
+            down.add("X");
+            up.add(" ");
         }
-        return stringJoiner.toString();
+
+        System.out.println(up);
+        System.out.println(down);
     }
 
     /**
