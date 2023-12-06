@@ -30,7 +30,12 @@ public class BridgeController {
             MovingStatus movingStatus = bridgeGame.move(bridge, movingDirection);
             OutputView.printMap(movingStatus);
             if (movingStatus.cannotCross()) {
-                restartOrQuit();
+                GameCommand gameCommand = repeatReadForInvalid(this::getGameCommand);
+                if (gameCommand.isRestart()) {
+                    bridgeGame.retry();
+                    continue;
+                }
+                break;
             }
         }
 
@@ -47,13 +52,6 @@ public class BridgeController {
 
     private GameCommand getGameCommand() {
         return GameCommand.of(InputView.readGameCommand());
-    }
-
-    private void restartOrQuit() {
-        GameCommand gameCommand = repeatReadForInvalid(this::getGameCommand);
-        if (gameCommand.isRestart()) {
-            bridgeGame.retry();
-        }
     }
 
     private <T> T repeatReadForInvalid(Supplier<T> reader) {
