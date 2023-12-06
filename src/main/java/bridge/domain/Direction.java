@@ -23,6 +23,13 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_DIRECTION.getMessage()));
     }
 
+    public static Direction of(int number) {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.number == number)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.INVALID_DIRECTION.getMessage()));
+    }
+
     public String getName() {
         return name;
     }

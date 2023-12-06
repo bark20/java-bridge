@@ -22,11 +22,8 @@ public class BridgeMaker {
     public List<String> makeBridge(int size) {
         List<String> bridge = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            if (bridgeNumberGenerator.generate() == 1) { // TODO Direction 이용해서 리팩토링
-                bridge.add(Direction.UP.getName());
-                continue;
-            }
-            bridge.add(Direction.DOWN.getName());
+            Direction direction = Direction.of(bridgeNumberGenerator.generate());
+            bridge.add(direction.getName());
         }
 
         return bridge;
