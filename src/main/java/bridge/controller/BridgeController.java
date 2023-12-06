@@ -1,10 +1,10 @@
 package bridge.controller;
 
 import bridge.BridgeGame;
+import bridge.domain.BridgeSize;
 import bridge.domain.Direction;
 import bridge.domain.GameCommand;
 import bridge.domain.MovingStatus;
-import bridge.error.ErrorMessage;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 import java.util.List;
@@ -21,9 +21,9 @@ public class BridgeController {
     public void run() {
         OutputView.printStartMessage();
 
-        int bridgeSize = repeatReadForInvalid(this::getBridgeSize);
+        BridgeSize bridgeSize = repeatReadForInvalid(this::getBridgeSize);
 
-        List<String> bridge = bridgeGame.makeBridge(bridgeSize);
+        List<String> bridge = bridgeGame.makeBridge(bridgeSize.getSize());
 
         while (bridgeGame.canMove(bridge)) {
             Direction movingDirection = repeatReadForInvalid(this::getDirection);
@@ -37,13 +37,8 @@ public class BridgeController {
         OutputView.printResult(bridgeGame.currentMovingStatus(), bridgeGame.isSuccess(), bridgeGame.getTryCount());
     }
 
-    private int getBridgeSize() {
-        int bridgeSize = InputView.readBridgeSize();
-        if (bridgeSize < 3 || bridgeSize > 20) {
-            throw new IllegalArgumentException(
-                    String.format(ErrorMessage.INVALID_BRIDGE_SIZE.getMessage(), 3, 20));
-        }
-        return bridgeSize;
+    private BridgeSize getBridgeSize() {
+        return new BridgeSize(InputView.readBridgeSize());
     }
 
     private Direction getDirection() {
