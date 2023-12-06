@@ -17,4 +17,8 @@ public class Bridge {
         }
         return false;
     }
+
+    public boolean end(){
+        return units.size() == 0;
+    }
 }
