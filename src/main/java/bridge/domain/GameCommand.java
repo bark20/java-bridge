@@ -19,4 +19,8 @@ public enum GameCommand {
                 .findFirst()
                 .orElseThrow(); // TODO 예외 메시지
     }
+
+    public String getName() {
+        return name;
+    }
 }
