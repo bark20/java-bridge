@@ -28,7 +28,7 @@ public class BridgeController {
         while (bridgeGame.canMove()) {
             Direction movingDirection = Direction.of(InputView.readMoving());
             MovingStatus movingStatus = bridgeGame.move(movingDirection);
-            OutputView.printMap(movingStatus.getMovingDirections(), movingStatus.getCanCrosses());
+            OutputView.printMap(movingStatus.formatMovingStatus());
             if (movingStatus.cannotCross()) {
                 GameCommand gameCommand = GameCommand.of(InputView.readGameCommand());
                 if (gameCommand == GameCommand.RESTART) {
@@ -38,5 +38,7 @@ public class BridgeController {
                 break;
             }
         }
+
+        OutputView.printResult(bridgeGame.formatMovingStatus(), bridgeGame.isSuccess(), bridgeGame.getTryCount());
     }
 }

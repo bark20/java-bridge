@@ -44,7 +44,15 @@ public class BridgeGame {
         tryCount++;
     }
 
-    public boolean hasMovedAll() {
-        return movingStatus.count() == bridge.size();
+    public String formatMovingStatus() {
+        return movingStatus.formatMovingStatus();
+    }
+
+    public boolean isSuccess() {
+        return !movingStatus.cannotCross();
+    }
+
+    public int getTryCount() {
+        return tryCount;
     }
 }
