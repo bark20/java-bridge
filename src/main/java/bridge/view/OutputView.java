@@ -2,7 +2,6 @@ package bridge.view;
 
 import bridge.domain.Direction;
 import bridge.domain.MovingStatus;
-import java.util.List;
 import java.util.StringJoiner;
 
 /**
