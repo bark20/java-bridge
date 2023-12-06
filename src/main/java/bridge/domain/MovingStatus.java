@@ -27,32 +27,6 @@ public class MovingStatus {
         return canCrosses.contains(false);
     }
 
-    public String formatMovingStatus() {
-        StringJoiner up = new StringJoiner(" | ", "[ ", " ]\n");
-        StringJoiner down = new StringJoiner(" | ", "[ ", " ]\n");
-        for (int i = 0; i < movingDirections.size(); i++) {
-            if (movingDirections.get(i) == Direction.UP) {
-                if (canCrosses.get(i)) {
-                    up.add("O");
-                    down.add(" ");
-                    continue;
-                }
-                up.add("X");
-                down.add(" ");
-                continue;
-            }
-            if (canCrosses.get(i)) {
-                down.add("O");
-                up.add(" ");
-                continue;
-            }
-            down.add("X");
-            up.add(" ");
-        }
-
-        return up.toString() + down.toString();
-    }
-
     public List<Direction> getMovingDirections() {
         return movingDirections;
     }

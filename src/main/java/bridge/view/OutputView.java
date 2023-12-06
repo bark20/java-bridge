@@ -1,6 +1,7 @@
 package bridge.view;
 
 import bridge.domain.Direction;
+import bridge.domain.MovingStatus;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -8,6 +9,10 @@ import java.util.StringJoiner;
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
  */
 public class OutputView {
+
+    private static final String O = "O";
+    private static final String X = "X";
+    private static final String SPACE = " ";
 
     private OutputView() {
     }
@@ -22,8 +27,45 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public static void printMap(String map) {
-        System.out.println(map);
+    public static void printMap(MovingStatus movingStatus) {
+        StringJoiner up = getStringJoiner();
+        StringJoiner down = getStringJoiner();
+        for (int i = 0; i < movingStatus.count(); i++) {
+            Direction movingDirection = movingStatus.getMovingDirections().get(i);
+            Boolean canCross = movingStatus.getCanCrosses().get(i);
+            if (movingDirection == Direction.UP) {
+                addOToUpIfCanCrossOrNot(up, down, canCross);
+                continue;
+            }
+            addOToDownIfCanCrossOrNot(up, down, canCross);
+        }
+
+        System.out.println(up);
+        System.out.println(down);
+    }
+
+    private static void addOToUpIfCanCrossOrNot(StringJoiner up, StringJoiner down, Boolean canCross) {
+        if (canCross) {
+            up.add(O);
+            down.add(SPACE);
+            return;
+        }
+        up.add(X);
+        down.add(SPACE);
+    }
+
+    private static void addOToDownIfCanCrossOrNot(StringJoiner up, StringJoiner down, Boolean canCross) {
+        if (canCross) {
+            down.add(O);
+            up.add(SPACE);
+            return;
+        }
+        down.add(X);
+        up.add(SPACE);
+    }
+
+    private static StringJoiner getStringJoiner() {
+        return new StringJoiner(" | ", "[ ", " ]");
     }
 
     /**
@@ -31,9 +73,9 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public static void printResult(String bridgeStatus, boolean isSuccess, int tryCount) {
+    public static void printResult(MovingStatus movingStatus, boolean isSuccess, int tryCount) {
         System.out.println("최종 게임 결과");
-        System.out.println(bridgeStatus);
+        printMap(movingStatus);
         printSuccessOrFailure(isSuccess);
         System.out.println("총 시도한 횟수: " + tryCount);
     }

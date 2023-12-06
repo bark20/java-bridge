@@ -48,8 +48,8 @@ public class BridgeGame {
         tryCount++;
     }
 
-    public String formatMovingStatus() {
-        return movingStatus.formatMovingStatus();
+    public MovingStatus currentMovingStatus() {
+        return movingStatus;
     }
 
     public boolean isSuccess() {

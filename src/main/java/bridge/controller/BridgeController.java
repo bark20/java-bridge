@@ -28,13 +28,13 @@ public class BridgeController {
         while (bridgeGame.canMove(bridge)) {
             Direction movingDirection = repeatReadForInvalid(this::getDirection);
             MovingStatus movingStatus = bridgeGame.move(bridge, movingDirection);
-            OutputView.printMap(movingStatus.formatMovingStatus());
+            OutputView.printMap(movingStatus);
             if (movingStatus.cannotCross()) {
                 restartOrQuit();
             }
         }
 
-        OutputView.printResult(bridgeGame.formatMovingStatus(), bridgeGame.isSuccess(), bridgeGame.getTryCount());
+        OutputView.printResult(bridgeGame.currentMovingStatus(), bridgeGame.isSuccess(), bridgeGame.getTryCount());
     }
 
     private int getBridgeSize() {
