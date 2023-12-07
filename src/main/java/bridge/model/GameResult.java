@@ -1,13 +1,12 @@
 package bridge.model;
 
-public enum BridgeStructure {
-    START("["),
-    END("]"),
-    MIDDLE("|");
+public enum GameResult {
+    SUCCESS("성공"),
+    FAIL("실패");
 
     private final String output;
 
-    BridgeStructure(String output) {
+    GameResult(String output) {
         this.output = output;
     }
 
