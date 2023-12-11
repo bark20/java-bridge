@@ -29,8 +29,8 @@ public class BridgeGameController {
         boolean isCrossingBridge = true;
 
         while (isCrossingBridge) {
-            outputView.printInputMoveMessage();
-            String userMove = inputView.readMoving();
+
+            String userMove = getUserMove();
             boolean moveSuccess = bridgeGame.move(userMove, userPosition);
 
             String moveResult = gameResult.getMoveResult(moveSuccess, userPosition, bridge);
@@ -69,5 +69,16 @@ public class BridgeGameController {
             bridgeSize = getBridgeSize();
         }
         return bridgeSize;
+    }
+
+    private String getUserMove() {
+        String userMove;
+        try {
+            outputView.printInputMoveMessage();
+            userMove = inputView.readMoving();
+        } catch (IllegalArgumentException e) {
+            userMove = getUserMove();
+        }
+        return userMove;
     }
 }

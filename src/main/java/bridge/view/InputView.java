@@ -8,7 +8,7 @@ import camp.nextstep.edu.missionutils.Console;
  */
 public class InputView {
 
-    private final Validator validator;
+    private final Validator validator = new Validator();
 
     /**
      * 다리의 길이를 입력받는다.
@@ -24,7 +24,7 @@ public class InputView {
      */
     public String readMoving() {
         String userInput = Console.readLine();
-        //validate(userInput)
+        validator.validateUserMove(userInput);
         return userInput;
     }
 
