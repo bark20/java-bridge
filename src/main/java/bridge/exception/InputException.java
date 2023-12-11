@@ -1,4 +1,4 @@
-package bridge;
+package bridge.exception;
 
 public enum InputException {
     INVALID_NUMERIC("자연수만 입력 가능합니다."),
