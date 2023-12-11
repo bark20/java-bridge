@@ -1,5 +1,7 @@
 package bridge.view;
 
+import java.util.List;
+
 /**
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
  */
@@ -31,5 +33,52 @@ public class OutputView {
 
     public void printInputMoveMessage() {
         System.out.println(ViewConstants.INPUT_MOVE_MESSAGE);
+    }
+
+    public void printMoveResult(boolean moveSuccess, int userPosition, List<String> bridge) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("[]\n[]");
+        //[]\n[]
+
+        int OXIndex = 1;
+        for (int i = 0; i <= userPosition; i++) {
+
+            if (i < userPosition) {
+                if (bridge.get(i).equals("U")) {
+                    stringBuilder.insert(OXIndex, " O |");
+                    stringBuilder.insert(OXIndex+7, "   |");
+                }
+                if (bridge.get(i).equals("D")) {
+                    stringBuilder.insert(OXIndex, "   |");
+                    stringBuilder.insert(OXIndex+7, " O |");
+                }
+            }
+
+            if (i == userPosition) {
+                if (bridge.get(i).equals("U")) {
+                    if (moveSuccess) {
+                        stringBuilder.insert(OXIndex, " O ");
+                        stringBuilder.insert(OXIndex+6, "   ");
+                    }
+                    if (!moveSuccess) {
+                        stringBuilder.insert(OXIndex, "   ");
+                        stringBuilder.insert(OXIndex+6, " X ");
+                    }
+                }
+                if (bridge.get(i).equals("D")) {
+                    if (moveSuccess) {
+                        stringBuilder.insert(OXIndex, "   ");
+                        stringBuilder.insert(OXIndex+6, " O ");
+                    }
+                    if (!moveSuccess) {
+                        stringBuilder.insert(OXIndex, " X ");
+                        stringBuilder.insert(OXIndex+6, "   ");
+                    }
+                }
+            }
+        }
+
+        System.out.println(stringBuilder);
+
     }
 }

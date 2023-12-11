@@ -5,6 +5,7 @@ import bridge.domain.BridgeMaker;
 import bridge.domain.BridgeRandomNumberGenerator;
 import bridge.view.InputView;
 import bridge.view.OutputView;
+import camp.nextstep.edu.missionutils.Console;
 
 import java.util.List;
 
@@ -32,9 +33,11 @@ public class BridgeGameController {
             outputView.printInputMoveMessage();
             String userMove = inputView.readMoving();
             boolean moveSuccess = bridgeGame.move(userMove, userPosition);
+            outputView.printMoveResult(moveSuccess, userPosition, bridge);
 
 
         }
+
 
     }
 }
