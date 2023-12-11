@@ -2,34 +2,58 @@ package bridge.domain;
 
 import java.util.List;
 
-/**
- * 다리 건너기 게임을 관리하는 클래스
- */
 public class BridgeGame {
 
     private final List<String> bridge;
+    private boolean isRetry = true;
+    private int userPosition = 0;
+    private boolean isMoved = true;
 
     public BridgeGame(List<String> bridge) {
         this.bridge = bridge;
     }
 
-    /**
-     * 사용자가 칸을 이동할 때 사용하는 메서드
-     * <p>
-     * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public boolean move(String userMove, int userPosition) {
+    public void move(String userMove) {
         if (bridge.get(userPosition).equals(userMove)) {
+            isMoved = true;
+        }
+        if (!(bridge.get(userPosition).equals(userMove))) {
+            isMoved = false;
+        }
+    }
+
+    public boolean isMoved() {
+        return isMoved;
+    }
+
+    public boolean retry() {
+        return isRetry;
+    }
+
+    public void quit() {
+        isRetry = false;
+    }
+
+    public void resetUserPosition() {
+        userPosition = 0;
+    }
+
+    public void userMoved() {
+        userPosition++;
+    }
+
+    public int getUserPosition() {
+        return userPosition;
+    }
+
+    public boolean endGame() {
+        if (userPosition == bridge.size()) {
             return true;
         }
         return false;
     }
 
-    /**
-     * 사용자가 게임을 다시 시도할 때 사용하는 메서드
-     * <p>
-     * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void retry() {
+    public String nextCorrectBridge(int i) {
+        return bridge.get(i);
     }
 }

@@ -33,7 +33,7 @@ public class InputView {
      */
     public String readGameCommand() {
         String userInput = Console.readLine();
-        //validate(userInput)
+        validator.validateGameCommand(userInput);
         return userInput;
     }
 }

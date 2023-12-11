@@ -1,19 +1,15 @@
 package bridge.domain;
 
-import java.util.List;
-
 public class GameResult {
 
     private boolean isSuccess = false;
     private int gameCount = 1;
     private String moveResult;
+    private StringBuilder upperBridge = new StringBuilder();
+    private StringBuilder lowerBridge = new StringBuilder();
 
     public void plusCount() {
         gameCount++;
-    }
-
-    public void resetCount() {
-        gameCount = 0;
     }
 
     public boolean isCrossSuccess() {
@@ -24,59 +20,76 @@ public class GameResult {
         return gameCount;
     }
 
-    public String getMoveResult(boolean moveSuccess, int userPosition, List<String> bridge) {
-        StringBuilder upperBridge = new StringBuilder();
-        StringBuilder lowerBridge = new StringBuilder();
-        upperBridge.append("[]");
-        lowerBridge.append("[]");
+    public String getMoveResult(BridgeGame bridgeGame) {
+        resetBridge();
+        int insertIndex = 1;
 
-
-        int upIndex = 1;
-        int downIndex = 1;
-        for (int i = 0; i <= userPosition; i++) {
-
-            if (i < userPosition) {
-                if (bridge.get(i).equals("U")) {
-                    upperBridge.insert(upIndex, " O |");
-                    lowerBridge.insert(downIndex, "   |");
-                }
-                if (bridge.get(i).equals("D")) {
-                    upperBridge.insert(upIndex, "   |");
-                    lowerBridge.insert(downIndex, " O |");
-                }
-                upIndex += 4;
-                downIndex += 4;
-            }
-
-            if (i == userPosition) {
-                if (bridge.get(i).equals("U")) {
-                    if (moveSuccess) {
-                        upperBridge.insert(upIndex, " O ");
-                        lowerBridge.insert(downIndex, "   ");
-                        isSuccess = true;
-                    }
-                    if (!moveSuccess) {
-                        upperBridge.insert(upIndex, "   ");
-                        lowerBridge.insert(downIndex, " X ");
-                        isSuccess = false;
-                    }
-                }
-                if (bridge.get(i).equals("D")) {
-                    if (moveSuccess) {
-                        upperBridge.insert(upIndex, "   ");
-                        lowerBridge.insert(downIndex, " O ");
-                        isSuccess = true;
-                    }
-                    if (!moveSuccess) {
-                        upperBridge.insert(upIndex, " X ");
-                        lowerBridge.insert(downIndex, "   ");
-                        isSuccess = false;
-                    }
-                }
-            }
+        for (int position = 0; position <= bridgeGame.getUserPosition(); position++) {
+            insertIndex = makeBeforeBridge(bridgeGame, position, insertIndex);
+            makeFinalBridgePosition(bridgeGame, position, insertIndex);
         }
+
         moveResult = upperBridge.toString() + "\n" + lowerBridge.toString();
         return moveResult;
+    }
+
+    private void resetBridge() {
+        upperBridge = new StringBuilder();
+        lowerBridge = new StringBuilder();
+        upperBridge.append("[]");
+        lowerBridge.append("[]");
+    }
+
+    private void makeFinalBridgePosition(BridgeGame bridgeGame, int position, int insertIndex) {
+        if (position == bridgeGame.getUserPosition()) {
+            if (bridgeGame.nextCorrectBridge(position).equals("U")) {
+                addFinalResultIfUp(bridgeGame, insertIndex);
+            }
+            if (bridgeGame.nextCorrectBridge(position).equals("D")) {
+                addFinalResultIfDown(bridgeGame, insertIndex);
+            }
+        }
+    }
+
+    private int makeBeforeBridge(BridgeGame bridgeGame, int position, int insertIndex) {
+        if (position < bridgeGame.getUserPosition()) {
+            if (bridgeGame.nextCorrectBridge(position).equals("U")) {
+                upperBridge.insert(insertIndex, " O |");
+                lowerBridge.insert(insertIndex, "   |");
+            }
+            if (bridgeGame.nextCorrectBridge(position).equals("D")) {
+                upperBridge.insert(insertIndex, "   |");
+                lowerBridge.insert(insertIndex, " O |");
+            }
+            insertIndex += 4;
+        }
+        return insertIndex;
+    }
+
+    private void addFinalResultIfDown(BridgeGame bridgeGame, int insertIndex) {
+        if (bridgeGame.isMoved()) {
+            upperBridge.insert(insertIndex, "   ");
+            lowerBridge.insert(insertIndex, " O ");
+            isSuccess = true;
+        }
+        if (!bridgeGame.isMoved()) {
+            upperBridge.insert(insertIndex, " X ");
+            lowerBridge.insert(insertIndex, "   ");
+            isSuccess = false;
+        }
+    }
+
+    private void addFinalResultIfUp(BridgeGame bridgeGame, int insertIndex) {
+        if (bridgeGame.isMoved()) {
+            upperBridge.insert(insertIndex, " O ");
+            lowerBridge.insert(insertIndex, "   ");
+            isSuccess = true;
+        }
+        if (!bridgeGame.isMoved()) {
+            upperBridge.insert(insertIndex, "   ");
+            lowerBridge.insert(insertIndex, " X ");
+            isSuccess = false;
+        }
     }
 
     public String getFinalMoveResult() {

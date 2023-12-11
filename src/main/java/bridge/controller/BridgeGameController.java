@@ -11,52 +11,61 @@ public class BridgeGameController {
     private final InputView inputView;
     private final OutputView outputView;
     private final BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
-    private final GameResult gameResult = new GameResult();
-    private final Validator validator;
 
     public BridgeGameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.validator = new Validator();
     }
 
     public void gameStart() {
         outputView.gameStartMessage();
         List<String> bridge = bridgeMaker.makeBridge(getBridgeSize());
+        System.out.println(bridge);
         BridgeGame bridgeGame = new BridgeGame(bridge);
+        GameResult gameResult = new GameResult();
 
-        int userPosition = 0;
-        boolean isCrossingBridge = true;
-
-        while (isCrossingBridge) {
-
-            String userMove = getUserMove();
-            boolean moveSuccess = bridgeGame.move(userMove, userPosition);
-
-            String moveResult = gameResult.getMoveResult(moveSuccess, userPosition, bridge);
-            outputView.printMoveResult(moveResult);
-
-            if (!moveSuccess) {
-                outputView.printInputRetryGameMessage();
-                String userChoice = inputView.readGameCommand();
-                if (userChoice.equals("Q")) {
-                    isCrossingBridge = false;
-                }
-                if (userChoice.equals("R")) {
-                    gameResult.plusCount();
-                    userPosition = 0;
-                }
-            }
-            if (moveSuccess) {
-                ++userPosition;
-                if (userPosition == bridge.size()) {
-                    isCrossingBridge = false;
-                }
-            }
-
-        }
+        crossBridge(gameResult, bridgeGame);
         outputView.printGameResult(
                 gameResult.getFinalMoveResult(), gameResult.isCrossSuccess(), gameResult.getGameCount());
+    }
+
+    private void crossBridge(GameResult gameResult, BridgeGame bridgeGame) {
+        while (bridgeGame.retry()) {
+            String userMove = getUserMove();
+            bridgeGame.move(userMove);
+
+            String moveResult = gameResult.getMoveResult(bridgeGame);
+            outputView.printMoveResult(moveResult);
+
+            doFunctionAfterMove(gameResult, bridgeGame);
+        }
+    }
+
+    private void doFunctionAfterMove(GameResult gameResult, BridgeGame bridgeGame) {
+        if (!bridgeGame.isMoved()) {
+            askRetry(gameResult, bridgeGame);
+        }
+        if (bridgeGame.isMoved()) {
+            readyForNextMove(bridgeGame);
+        }
+    }
+
+    private static void readyForNextMove(BridgeGame bridgeGame) {
+        bridgeGame.userMoved();
+        if (bridgeGame.endGame()) {
+            bridgeGame.quit();
+        }
+    }
+
+    private void askRetry(GameResult gameResult, BridgeGame bridgeGame) {
+        String userChoice = getUserChoice();
+        if (userChoice.equals("Q")) {
+            bridgeGame.quit();
+        }
+        if (userChoice.equals("R")) {
+            gameResult.plusCount();
+            bridgeGame.resetUserPosition();
+        }
     }
 
     private int getBridgeSize() {
@@ -80,5 +89,17 @@ public class BridgeGameController {
             userMove = getUserMove();
         }
         return userMove;
+    }
+
+    private String getUserChoice() {
+        String userChoice;
+        try {
+            outputView.printInputRetryGameMessage();
+            userChoice = inputView.readGameCommand();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            userChoice = getUserChoice();
+        }
+        return userChoice;
     }
 }
