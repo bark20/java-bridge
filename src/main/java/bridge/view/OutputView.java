@@ -36,49 +36,58 @@ public class OutputView {
     }
 
     public void printMoveResult(boolean moveSuccess, int userPosition, List<String> bridge) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("[]\n[]");
-        //[]\n[]
+        StringBuilder upperBridge = new StringBuilder();
+        StringBuilder lowerBridge = new StringBuilder();
+        upperBridge.append("[]");
+        lowerBridge.append("[]");
 
-        int OXIndex = 1;
+
+        int upIndex = 1;
+        int downIndex = 1;
         for (int i = 0; i <= userPosition; i++) {
 
             if (i < userPosition) {
                 if (bridge.get(i).equals("U")) {
-                    stringBuilder.insert(OXIndex, " O |");
-                    stringBuilder.insert(OXIndex+7, "   |");
+                    upperBridge.insert(upIndex, " O |");
+                    lowerBridge.insert(downIndex, "   |");
                 }
                 if (bridge.get(i).equals("D")) {
-                    stringBuilder.insert(OXIndex, "   |");
-                    stringBuilder.insert(OXIndex+7, " O |");
+                    upperBridge.insert(upIndex, "   |");
+                    lowerBridge.insert(downIndex, " O |");
                 }
+                upIndex += 4;
+                downIndex += 4;
             }
 
             if (i == userPosition) {
                 if (bridge.get(i).equals("U")) {
                     if (moveSuccess) {
-                        stringBuilder.insert(OXIndex, " O ");
-                        stringBuilder.insert(OXIndex+6, "   ");
+                        upperBridge.insert(upIndex, " O ");
+                        lowerBridge.insert(downIndex, "   ");
                     }
                     if (!moveSuccess) {
-                        stringBuilder.insert(OXIndex, "   ");
-                        stringBuilder.insert(OXIndex+6, " X ");
+                        upperBridge.insert(upIndex, "   ");
+                        lowerBridge.insert(downIndex, " X ");
                     }
                 }
                 if (bridge.get(i).equals("D")) {
                     if (moveSuccess) {
-                        stringBuilder.insert(OXIndex, "   ");
-                        stringBuilder.insert(OXIndex+6, " O ");
+                        upperBridge.insert(upIndex, "   ");
+                        lowerBridge.insert(downIndex, " O ");
                     }
                     if (!moveSuccess) {
-                        stringBuilder.insert(OXIndex, " X ");
-                        stringBuilder.insert(OXIndex+6, "   ");
+                        upperBridge.insert(upIndex, " X ");
+                        lowerBridge.insert(downIndex, "   ");
                     }
                 }
             }
         }
 
-        System.out.println(stringBuilder);
+        System.out.println(upperBridge);
+        System.out.println(lowerBridge);
+    }
 
+    public void printInputRetryGameMessage() {
+        System.out.println(ViewConstants.INPUT_RETRY_GAME_MESSAGE);
     }
 }

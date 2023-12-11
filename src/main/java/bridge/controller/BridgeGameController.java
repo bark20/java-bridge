@@ -26,17 +26,36 @@ public class BridgeGameController {
 
         BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
         List<String> bridge = bridgeMaker.makeBridge(bridgeSize);
+        System.out.println(bridge);
         BridgeGame bridgeGame = new BridgeGame(bridge);
         int userPosition = 0;
 
-        while (true) {
+        boolean isCrossingBridge = true;
+        while (isCrossingBridge) {
             outputView.printInputMoveMessage();
             String userMove = inputView.readMoving();
             boolean moveSuccess = bridgeGame.move(userMove, userPosition);
             outputView.printMoveResult(moveSuccess, userPosition, bridge);
 
+            if (!moveSuccess) {
+                outputView.printInputRetryGameMessage();
+                String userChoice = inputView.readGameCommand();
+                if (userChoice.equals("Q")) {
+                    isCrossingBridge = false;
+                }
+                if (userChoice.equals("R")) {
+                    userPosition = 0;
+                }
+            }
+            if (moveSuccess) {
+                ++userPosition;
+                if (userPosition == bridge.size()) {
+                    isCrossingBridge = false;
+                }
+            }
 
         }
+        //outputView.printGameResult();
 
 
     }
