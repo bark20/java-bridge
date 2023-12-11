@@ -20,4 +20,12 @@ public class OutputView {
      */
     public void printResult() {
     }
+
+    public void gameStartMessage() {
+        System.out.println(ViewConstants.START_MESSAGE);
+    }
+
+    public void inputBridgeSizeMessage() {
+        System.out.println(ViewConstants.INPUT_BRIDGE_SIZE_MESSAGE);
+    }
 }
