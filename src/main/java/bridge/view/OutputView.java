@@ -35,59 +35,26 @@ public class OutputView {
         System.out.println(ViewConstants.INPUT_MOVE_MESSAGE);
     }
 
-    public void printMoveResult(boolean moveSuccess, int userPosition, List<String> bridge) {
-        StringBuilder upperBridge = new StringBuilder();
-        StringBuilder lowerBridge = new StringBuilder();
-        upperBridge.append("[]");
-        lowerBridge.append("[]");
-
-
-        int upIndex = 1;
-        int downIndex = 1;
-        for (int i = 0; i <= userPosition; i++) {
-
-            if (i < userPosition) {
-                if (bridge.get(i).equals("U")) {
-                    upperBridge.insert(upIndex, " O |");
-                    lowerBridge.insert(downIndex, "   |");
-                }
-                if (bridge.get(i).equals("D")) {
-                    upperBridge.insert(upIndex, "   |");
-                    lowerBridge.insert(downIndex, " O |");
-                }
-                upIndex += 4;
-                downIndex += 4;
-            }
-
-            if (i == userPosition) {
-                if (bridge.get(i).equals("U")) {
-                    if (moveSuccess) {
-                        upperBridge.insert(upIndex, " O ");
-                        lowerBridge.insert(downIndex, "   ");
-                    }
-                    if (!moveSuccess) {
-                        upperBridge.insert(upIndex, "   ");
-                        lowerBridge.insert(downIndex, " X ");
-                    }
-                }
-                if (bridge.get(i).equals("D")) {
-                    if (moveSuccess) {
-                        upperBridge.insert(upIndex, "   ");
-                        lowerBridge.insert(downIndex, " O ");
-                    }
-                    if (!moveSuccess) {
-                        upperBridge.insert(upIndex, " X ");
-                        lowerBridge.insert(downIndex, "   ");
-                    }
-                }
-            }
-        }
-
-        System.out.println(upperBridge);
-        System.out.println(lowerBridge);
+    public void printMoveResult(String moveResult) {
+        System.out.println(moveResult);
     }
 
     public void printInputRetryGameMessage() {
         System.out.println(ViewConstants.INPUT_RETRY_GAME_MESSAGE);
+    }
+
+    public void printGameResult(String finalMoveResult, boolean isSuccess, int gameCount) {
+        System.out.println("최종 게임 결과");
+        System.out.println(finalMoveResult);
+
+        String crossSuccess = "";
+        if (isSuccess) {
+            crossSuccess = "성공";
+        }
+        if (!isSuccess) {
+            crossSuccess = "실패";
+        }
+        System.out.println("게임 성공 여부: " + crossSuccess);
+        System.out.println("총 시도한 횟수: " + gameCount);
     }
 }

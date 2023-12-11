@@ -3,6 +3,7 @@ package bridge.controller;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgeMaker;
 import bridge.domain.BridgeRandomNumberGenerator;
+import bridge.domain.GameResult;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 import camp.nextstep.edu.missionutils.Console;
@@ -30,12 +31,17 @@ public class BridgeGameController {
         BridgeGame bridgeGame = new BridgeGame(bridge);
         int userPosition = 0;
 
+        GameResult gameResult = new GameResult();
+
         boolean isCrossingBridge = true;
         while (isCrossingBridge) {
+
             outputView.printInputMoveMessage();
             String userMove = inputView.readMoving();
             boolean moveSuccess = bridgeGame.move(userMove, userPosition);
-            outputView.printMoveResult(moveSuccess, userPosition, bridge);
+
+            String moveResult = gameResult.getMoveResult(moveSuccess, userPosition, bridge);
+            outputView.printMoveResult(moveResult);
 
             if (!moveSuccess) {
                 outputView.printInputRetryGameMessage();
@@ -44,6 +50,7 @@ public class BridgeGameController {
                     isCrossingBridge = false;
                 }
                 if (userChoice.equals("R")) {
+                    gameResult.plusCount();
                     userPosition = 0;
                 }
             }
@@ -55,7 +62,10 @@ public class BridgeGameController {
             }
 
         }
-        //outputView.printGameResult();
+        outputView.printGameResult(
+                gameResult.getFinalMoveResult(), gameResult.isCrossSuccess(), gameResult.getGameCount());
+
+
 
 
     }
