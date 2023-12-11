@@ -12,5 +12,7 @@ public class ViewConstants {
     public static final String FINAL_RESULT_MESSAGE = LINE_SEPARATOR + "최종 게임 결과";
     public static final String CROSS_SUCCESS_FORMAT = LINE_SEPARATOR + "게임 성공 여부: %s";
     public static final String GAME_COUNT_FORMAT = "총 시도한 횟수: %d";
+    public static final String SUCCESS = "성공";
+    public static final String FAIL = "실패";
 
 }

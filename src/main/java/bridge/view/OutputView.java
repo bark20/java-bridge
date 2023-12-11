@@ -1,24 +1,18 @@
 package bridge.view;
 
-/**
- * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
- */
 public class OutputView {
 
-    /**
-     * 현재까지 이동한 다리의 상태를 정해진 형식에 맞춰 출력한다.
-     * <p>
-     * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void printMap() {
+    public void printMap(String moveResult) {
+        System.out.println(moveResult);
     }
 
-    /**
-     * 게임의 최종 결과를 정해진 형식에 맞춰 출력한다.
-     * <p>
-     * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void printResult() {
+    public void printResult(String finalMoveResult, boolean isSuccess, int gameCount) {
+        System.out.println(ViewConstants.FINAL_RESULT_MESSAGE);
+        System.out.println(finalMoveResult);
+
+        String crossSuccess = getIsSuccess(isSuccess);
+        System.out.println(String.format(ViewConstants.CROSS_SUCCESS_FORMAT, crossSuccess));
+        System.out.println(String.format(ViewConstants.GAME_COUNT_FORMAT, gameCount));
     }
 
     public void gameStartMessage() {
@@ -33,27 +27,14 @@ public class OutputView {
         System.out.println(ViewConstants.INPUT_MOVE_MESSAGE);
     }
 
-    public void printMoveResult(String moveResult) {
-        System.out.println(moveResult);
-    }
-
     public void printInputRetryGameMessage() {
         System.out.println(ViewConstants.INPUT_RETRY_GAME_MESSAGE);
     }
 
-    public void printGameResult(String finalMoveResult, boolean isSuccess, int gameCount) {
-        System.out.println(ViewConstants.FINAL_RESULT_MESSAGE);
-        System.out.println(finalMoveResult);
-
-        String crossSuccess = getIsSuccess(isSuccess);
-        System.out.println(String.format(ViewConstants.CROSS_SUCCESS_FORMAT, crossSuccess));
-        System.out.println(String.format(ViewConstants.GAME_COUNT_FORMAT, gameCount));
-    }
-
     private static String getIsSuccess(boolean isSuccess) {
         if (isSuccess) {
-            return "성공";
+            return ViewConstants.SUCCESS;
         }
-        return "실패";
+        return ViewConstants.FAIL;
     }
 }

@@ -53,7 +53,7 @@ public class BridgeGame {
         return false;
     }
 
-    public String nextCorrectBridge(int i) {
-        return bridge.get(i);
+    public String nextCorrectBridge(int position) {
+        return bridge.get(position);
     }
 }

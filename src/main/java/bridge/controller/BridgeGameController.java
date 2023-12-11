@@ -25,7 +25,7 @@ public class BridgeGameController {
         GameResult gameResult = new GameResult();
 
         crossBridge(gameResult, bridgeGame);
-        outputView.printGameResult(
+        outputView.printResult(
                 gameResult.getFinalMoveResult(), gameResult.isCrossSuccess(), gameResult.getGameCount());
     }
 
@@ -35,7 +35,7 @@ public class BridgeGameController {
             bridgeGame.move(userMove);
 
             String moveResult = gameResult.getMoveResult(bridgeGame);
-            outputView.printMoveResult(moveResult);
+            outputView.printMap(moveResult);
 
             doFunctionAfterMove(gameResult, bridgeGame);
         }
