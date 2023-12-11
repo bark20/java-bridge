@@ -1,5 +1,6 @@
 package bridge.controller;
 
+import bridge.domain.BridgeGame;
 import bridge.domain.BridgeMaker;
 import bridge.domain.BridgeRandomNumberGenerator;
 import bridge.view.InputView;
@@ -24,7 +25,16 @@ public class BridgeGameController {
 
         BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
         List<String> bridge = bridgeMaker.makeBridge(bridgeSize);
+        BridgeGame bridgeGame = new BridgeGame(bridge);
+        int userPosition = 0;
 
+        while (true) {
+            outputView.printInputMoveMessage();
+            String userMove = inputView.readMoving();
+            boolean moveSuccess = bridgeGame.move(userMove, userPosition);
+
+
+        }
 
     }
 }

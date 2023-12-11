@@ -28,4 +28,8 @@ public class OutputView {
     public void inputBridgeSizeMessage() {
         System.out.println(ViewConstants.INPUT_BRIDGE_SIZE_MESSAGE);
     }
+
+    public void printInputMoveMessage() {
+        System.out.println(ViewConstants.INPUT_MOVE_MESSAGE);
+    }
 }
