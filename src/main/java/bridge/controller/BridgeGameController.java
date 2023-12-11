@@ -1,12 +1,8 @@
 package bridge.controller;
 
-import bridge.domain.BridgeGame;
-import bridge.domain.BridgeMaker;
-import bridge.domain.BridgeRandomNumberGenerator;
-import bridge.domain.GameResult;
+import bridge.domain.*;
 import bridge.view.InputView;
 import bridge.view.OutputView;
-import camp.nextstep.edu.missionutils.Console;
 
 import java.util.List;
 
@@ -14,28 +10,25 @@ public class BridgeGameController {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
+    private final GameResult gameResult = new GameResult();
+    private final Validator validator;
 
     public BridgeGameController(InputView inputView, OutputView outputView) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.validator = new Validator();
     }
 
     public void gameStart() {
         outputView.gameStartMessage();
-        outputView.inputBridgeSizeMessage();
-        int bridgeSize = inputView.readBridgeSize();
-
-        BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
-        List<String> bridge = bridgeMaker.makeBridge(bridgeSize);
-        System.out.println(bridge);
+        List<String> bridge = bridgeMaker.makeBridge(getBridgeSize());
         BridgeGame bridgeGame = new BridgeGame(bridge);
+
         int userPosition = 0;
-
-        GameResult gameResult = new GameResult();
-
         boolean isCrossingBridge = true;
-        while (isCrossingBridge) {
 
+        while (isCrossingBridge) {
             outputView.printInputMoveMessage();
             String userMove = inputView.readMoving();
             boolean moveSuccess = bridgeGame.move(userMove, userPosition);
@@ -64,9 +57,17 @@ public class BridgeGameController {
         }
         outputView.printGameResult(
                 gameResult.getFinalMoveResult(), gameResult.isCrossSuccess(), gameResult.getGameCount());
+    }
 
-
-
-
+    private int getBridgeSize() {
+        int bridgeSize;
+        try {
+            outputView.inputBridgeSizeMessage();
+            bridgeSize = inputView.readBridgeSize();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            bridgeSize = getBridgeSize();
+        }
+        return bridgeSize;
     }
 }

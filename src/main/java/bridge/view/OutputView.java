@@ -1,7 +1,5 @@
 package bridge.view;
 
-import java.util.List;
-
 /**
  * 사용자에게 게임 진행 상황과 결과를 출력하는 역할을 한다.
  */
@@ -44,17 +42,18 @@ public class OutputView {
     }
 
     public void printGameResult(String finalMoveResult, boolean isSuccess, int gameCount) {
-        System.out.println("최종 게임 결과");
+        System.out.println(ViewConstants.FINAL_RESULT_MESSAGE);
         System.out.println(finalMoveResult);
 
-        String crossSuccess = "";
+        String crossSuccess = getIsSuccess(isSuccess);
+        System.out.println(String.format(ViewConstants.CROSS_SUCCESS_FORMAT, crossSuccess));
+        System.out.println(String.format(ViewConstants.GAME_COUNT_FORMAT, gameCount));
+    }
+
+    private static String getIsSuccess(boolean isSuccess) {
         if (isSuccess) {
-            crossSuccess = "성공";
+            return "성공";
         }
-        if (!isSuccess) {
-            crossSuccess = "실패";
-        }
-        System.out.println("게임 성공 여부: " + crossSuccess);
-        System.out.println("총 시도한 횟수: " + gameCount);
+        return "실패";
     }
 }
