@@ -1,7 +1,7 @@
 package bridge.controller;
 
+import bridge.controller.dto.Move;
 import bridge.controller.dto.MovingResult;
-import bridge.controller.dto.SingleMove;
 import bridge.domain.BridgeMaker;
 import bridge.view.InputView;
 import bridge.view.OutputView;
@@ -48,7 +48,7 @@ public class BridgeGame {
     public MovingResult retry(List<String> bridges) {
         int count = 1;
         while (true) {
-            List<SingleMove> result = move(bridges);
+            List<Move> result = move(bridges);
             if (isSucceed(result)) {
                 return new MovingResult(result, "성공", count);
             }
@@ -62,7 +62,7 @@ public class BridgeGame {
         }
     }
 
-    private boolean isSucceed(List<SingleMove> result) {
+    private boolean isSucceed(List<Move> result) {
         int size = result.size();
         return cannotMove(result.get(size - 1).success(), "O");
     }
@@ -70,28 +70,35 @@ public class BridgeGame {
     /**
      * 사용자가 칸을 이동할 때 사용하는 메서드
      */
-    public List<SingleMove> move(List<String> bridges) {
-        List<SingleMove> moves = new ArrayList<>();
+    public List<Move> move(List<String> bridges) {
+        List<Move> moves = new ArrayList<>();
         for (String bridge : bridges) {
-            String direction = retryUntilSuccess(() -> {
-                return inputView.readMoving();
-            });
-            if (cannotMove(bridge, direction)) {
-                addMove(moves, direction, "X");
+            Move move = createSingleMove(bridge);
+            moves.add(move);
+            outputView.printMap(moves);
+            if (move.direction().equals("X")) {
                 return moves;
             }
-            addMove(moves, direction, "O");
         }
         return moves;
     }
 
-    private boolean cannotMove(String bridge, String direction) {
-        return !bridge.equals(direction);
+    private Move createSingleMove(String bridge) {
+        String direction = getDirection();
+        if (cannotMove(bridge, direction)) {
+            return new Move(direction, "X");
+        }
+        return new Move(direction, "O");
     }
 
-    private void addMove(List<SingleMove> moves, String direction, String success) {
-        moves.add(new SingleMove(direction, success));
-        outputView.printMap(moves);
+    private String getDirection() {
+        return retryUntilSuccess(() -> {
+            return inputView.readMoving();
+        });
+    }
+
+    private boolean cannotMove(String bridge, String direction) {
+        return !bridge.equals(direction);
     }
 
     private static <T> T retryUntilSuccess(Supplier<T> supplier) {
