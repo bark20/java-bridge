@@ -46,7 +46,7 @@ public class BridgeGame {
      * 사용자가 게임을 다시 시도할 때 사용하는 메서드
      */
     public MovingResult retry(List<String> bridges) {
-        int count = 0;
+        int count = 1;
         while (true) {
             List<SingleMove> result = move(bridges);
 
