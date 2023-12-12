@@ -28,7 +28,7 @@ public class BridgeGame {
 
     public void run() {
         List<String> bridges = prepare();
-        MovingResult movingResult = move(bridges);
+        MovingResult movingResult = retry(bridges);
         outputView.printResult(movingResult);
     }
 
@@ -43,15 +43,15 @@ public class BridgeGame {
     }
 
     /**
-     * 사용자가 칸을 이동할 때 사용하는 메서드
+     * 사용자가 게임을 다시 시도할 때 사용하는 메서드
      */
-    public MovingResult move(List<String> bridges) {
+    public MovingResult retry(List<String> bridges) {
         int count = 0;
         while (true) {
-            List<SingleMove> result = tryMove(bridges);
+            List<SingleMove> result = move(bridges);
 
             int size = result.size();
-            if (result.get(size - 1).equals("O")) { // 성공 시 결과 반환
+            if (result.get(size - 1).success().equals("O")) { // 성공 시 결과 반환
                 return new MovingResult(
                         result,
                         "성공",
@@ -59,7 +59,9 @@ public class BridgeGame {
                 );
             }
             // 실패 시 다시 시도할 지 여부를 입력한다.
-            String retry = inputView.readGameCommand();
+            String retry = retryUntilSuccess(() -> {
+                return inputView.readGameCommand();
+            });
 
             // 실패 후 종료를 입력했을 시 결과를 반환한다.
             if (retry.equals("Q")) {
@@ -73,11 +75,17 @@ public class BridgeGame {
         }
     }
 
-    private List<SingleMove> tryMove(List<String> bridges) {
+    /**
+     * 사용자가 칸을 이동할 때 사용하는 메서드
+     */
+    public List<SingleMove> move(List<String> bridges) {
+
         List<SingleMove> moves = new ArrayList<>();
 
         for (String bridge : bridges) {
-            String direction = inputView.readMoving();
+            String direction = retryUntilSuccess(() -> {
+                return inputView.readMoving();
+            });
             if (bridge.equals(direction)) { // 지나갈 수 있는 경우
                 moves.add(new SingleMove(direction, "O"));
                 outputView.printMap(moves);
@@ -89,14 +97,6 @@ public class BridgeGame {
             return moves;
         }
         return moves;
-    }
-
-    /**
-     * 사용자가 게임을 다시 시도할 때 사용하는 메서드
-     * <p>
-     * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void retry() {
     }
 
     private static <T> T retryUntilSuccess(Supplier<T> supplier) {
