@@ -45,7 +45,7 @@ public class InputView {
         return input;
     }
 
-    public String input() {
+    private String input() {
         return Console.readLine();
     }
 }
