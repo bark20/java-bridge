@@ -49,7 +49,7 @@ public class InputView {
     }
 
     private boolean isNotMatch(String actual, String expected) {
-        return actual.equals(expected);
+        return !actual.equals(expected);
     }
 
     /**
