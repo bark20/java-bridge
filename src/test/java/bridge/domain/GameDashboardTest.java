@@ -2,6 +2,9 @@ package bridge.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import bridge.domain.constant.MoveCommand;
+import bridge.domain.constant.Status;
+import bridge.domain.model.GameDashboard;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

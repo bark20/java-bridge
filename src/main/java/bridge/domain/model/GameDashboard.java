@@ -1,5 +1,7 @@
-package bridge.domain;
+package bridge.domain.model;
 
+import bridge.domain.constant.MoveCommand;
+import bridge.domain.constant.Status;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
