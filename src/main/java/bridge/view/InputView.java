@@ -55,6 +55,14 @@ public class InputView {
      * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
      */
     public String readGameCommand() {
-        return null;
+        ConsoleWriter.printlnMessage("게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)");
+        return validateGameCommand(ConsoleReader.enterMessage());
+    }
+
+    private String validateGameCommand(String message) {
+        if (isNotMatch(message, "R") && isNotMatch(message, "Q")) {
+            throw CustomException.from(ErrorMessage.INVALID_GAME_COMMAND);
+        }
+        return message;
     }
 }
