@@ -1,7 +1,7 @@
 package bridge.view;
 
 import bridge.controller.dto.Move;
-import bridge.controller.dto.MovingResult;
+import bridge.controller.dto.MoveResult;
 import bridge.view.console.ConsoleWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class OutputView {
     /**
      * 게임의 최종 결과를 정해진 형식에 맞춰 출력한다.
      */
-    public void printResult(MovingResult result) {
+    public void printResult(MoveResult result) {
         ConsoleWriter.printlnMessage("최종 게임 결과");
         printMap(result.singleMoves());
         ConsoleWriter.printlnFormat(GAME_RESULT_MESSAGE, result.success());

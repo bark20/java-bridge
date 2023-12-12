@@ -1,13 +1,14 @@
 package bridge.controller.dto;
 
+import bridge.domain.constants.Result;
 import java.util.List;
 
-public class MovingResult {
+public class MoveResult {
     private List<Move> moves;
-    private String success;
+    private Result success;
     private int count;
 
-    public MovingResult(List<Move> moves, String success, int count) {
+    public MoveResult(List<Move> moves, Result success, int count) {
         this.moves = moves;
         this.success = success;
         this.count = count;
@@ -17,7 +18,7 @@ public class MovingResult {
         return moves;
     }
 
-    public String success() {
+    public Result success() {
         return success;
     }
 
