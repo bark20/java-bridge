@@ -1,6 +1,7 @@
 package bridge;
 
 import bridge.domain.MoveCommand;
+import bridge.exception.InputException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
