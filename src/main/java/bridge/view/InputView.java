@@ -2,7 +2,6 @@ package bridge.view;
 
 import bridge.exception.InputException;
 import camp.nextstep.edu.missionutils.Console;
-import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -11,8 +10,7 @@ import java.util.regex.Pattern;
 public class InputView {
 
     private static final Pattern BRIDGE_SIZE_PATTERN = Pattern.compile("^[0-9]{1,2}$");
-    private final List<String> MOVE_COMMAND = List.of("U", "D");
-    private final List<String> RETRY_END_COMMAND = List.of("U", "D");
+    private static final Pattern COMMAND_PATTERN = Pattern.compile("^[A-Z]{1,2}$");
 
     /**
      * 다리의 길이를 입력받는다.
@@ -30,7 +28,7 @@ public class InputView {
      */
     public String readMoving() {
         String input = input();
-        if (!MOVE_COMMAND.contains(input)) {
+        if (!COMMAND_PATTERN.matcher(input).matches()) {
             throw new IllegalArgumentException(InputException.INVALID_MOVE_COMMAND.getMessage());
         }
         return input;
@@ -41,7 +39,7 @@ public class InputView {
      */
     public String readGameCommand() {
         String input = input();
-        if (!RETRY_END_COMMAND.contains(input)) {
+        if (!COMMAND_PATTERN.matcher(input).matches()) {
             throw new IllegalArgumentException(InputException.INVALID_RETRY_COMMAND.getMessage());
         }
         return input;
