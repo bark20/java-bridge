@@ -59,7 +59,7 @@ public class OutputView {
     public void printResult(MoveResult result) {
         ConsoleWriter.printlnMessage("최종 게임 결과");
         printMap(result.singleMoves());
-        ConsoleWriter.printlnFormat(GAME_RESULT_MESSAGE, result.success());
+        ConsoleWriter.printlnFormat(GAME_RESULT_MESSAGE, result.success().getName());
         ConsoleWriter.printlnFormat(TRY_COUNT_MESSAGE, result.count());
     }
 }

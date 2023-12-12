@@ -59,7 +59,7 @@ public class MoveController {
             Move move = createSingleMove(bridge);
             moves.add(move);
             outputView.printMap(moves);
-            if (move.direction().equals("X")) {
+            if (move.success().equals("X")) {
                 return moves;
             }
         }
