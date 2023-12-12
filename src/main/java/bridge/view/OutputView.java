@@ -13,8 +13,8 @@ public class OutputView {
 
     private static final String NONE = " ";
     private static final String SINGLE_MAP_FORMAT = " | %s";
-    private static final String GAME_RESULT_MESSAGE = "게임 성공 여부 : %s";
-    private static final String TRY_COUNT_MESSAGE = "총 시도한 횟수 : %d";
+    private static final String GAME_RESULT_MESSAGE = "게임 성공 여부: %s";
+    private static final String TRY_COUNT_MESSAGE = "총 시도한 횟수: %d";
 
     public void printStartMessage() {
         ConsoleWriter.printlnMessage("다리 건너기 게임을 시작합니다.");
@@ -27,17 +27,18 @@ public class OutputView {
         List<String> up = new ArrayList<>();
         List<String> down = new ArrayList<>();
         for (SingleMove move : moves) {
-            if (move.direction() == "U") {
+            if (move.direction().equals("U")) {
                 up.add(move.success());
                 down.add(NONE);
             }
-            if (move.direction() == "D") {
+            if (move.direction().equals("D")) {
                 up.add(NONE);
                 down.add(move.success());
             }
         }
         ConsoleWriter.printlnMessage(generateSingleMapRow(up));
         ConsoleWriter.printlnMessage(generateSingleMapRow(down));
+        ConsoleWriter.println();
     }
 
     public String generateSingleMapRow(List<String> map) {
