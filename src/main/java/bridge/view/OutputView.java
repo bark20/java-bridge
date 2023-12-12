@@ -1,7 +1,7 @@
 package bridge.view;
 
+import bridge.controller.dto.Move;
 import bridge.controller.dto.MovingResult;
-import bridge.controller.dto.SingleMove;
 import bridge.view.console.ConsoleWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,10 @@ public class OutputView {
     /**
      * 현재까지 이동한 다리의 상태를 정해진 형식에 맞춰 출력한다.
      */
-    public void printMap(List<SingleMove> moves) {
+    public void printMap(List<Move> moves) {
         List<String> up = new ArrayList<>();
         List<String> down = new ArrayList<>();
-        for (SingleMove move : moves) {
+        for (Move move : moves) {
             if (move.direction().equals("U")) {
                 up.add(move.success());
                 down.add(NONE);

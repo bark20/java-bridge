@@ -3,18 +3,18 @@ package bridge.controller.dto;
 import java.util.List;
 
 public class MovingResult {
-    private List<SingleMove> singleMoves;
+    private List<Move> moves;
     private String success;
     private int count;
 
-    public MovingResult(List<SingleMove> singleMoves, String success, int count) {
-        this.singleMoves = singleMoves;
+    public MovingResult(List<Move> moves, String success, int count) {
+        this.moves = moves;
         this.success = success;
         this.count = count;
     }
 
-    public List<SingleMove> singleMoves() {
-        return singleMoves;
+    public List<Move> singleMoves() {
+        return moves;
     }
 
     public String success() {

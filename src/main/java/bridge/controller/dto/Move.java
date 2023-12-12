@@ -1,10 +1,10 @@
 package bridge.controller.dto;
 
-public class SingleMove {
+public class Move {
     private String direction; // U, D
     private String success; // O, X
 
-    public SingleMove(String direction, String success) {
+    public Move(String direction, String success) {
         this.direction = direction;
         this.success = success;
     }
