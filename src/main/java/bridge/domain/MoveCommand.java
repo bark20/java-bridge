@@ -1,5 +1,6 @@
 package bridge.domain;
 
+import bridge.exception.InputException;
 import java.util.Arrays;
 
 public enum MoveCommand {
@@ -12,6 +13,14 @@ public enum MoveCommand {
     MoveCommand(String command, int number) {
         this.command = command;
         this.number = number;
+    }
+
+    public static MoveCommand from(String input) {
+        return Arrays.stream(MoveCommand.values())
+                .filter(com -> com.command.equals(input))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        InputException.INVALID_MOVE_COMMAND.getMessage()));
     }
 
     public static MoveCommand from(int number) {
