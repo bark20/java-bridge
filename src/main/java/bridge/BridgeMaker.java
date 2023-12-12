@@ -1,6 +1,6 @@
 package bridge;
 
-import bridge.domain.MoveCommand;
+import bridge.domain.constant.MoveCommand;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
