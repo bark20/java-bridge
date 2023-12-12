@@ -1,5 +1,8 @@
 package bridge.view;
 
+import bridge.global.exception.ErrorMessage;
+import bridge.global.validator.Validator;
+import bridge.view.console.ConsoleReader;
 import bridge.view.console.ConsoleWriter;
 
 /**
@@ -12,7 +15,20 @@ public class InputView {
      */
     public int readBridgeSize() {
         ConsoleWriter.printlnMessage("다리의 길이를 입력해주세요.");
+        return validateBridgeSize(ConsoleReader.enterMessage());
+    }
 
+    private int validateBridgeSize(String message) {
+        int size = Validator.validateNumber(
+                message,
+                ErrorMessage.NOT_NUMBER_ERROR
+        );
+        Validator.validateRange(size,
+                3,
+                20,
+                ErrorMessage.BRIDGE_SIZE_RANGE_ERROR
+        );
+        return size;
     }
 
     /**

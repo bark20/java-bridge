@@ -4,17 +4,18 @@ import bridge.global.exception.CustomException;
 import bridge.global.exception.ErrorMessage;
 
 public final class Validator {
-    public static void validateNumber(String message, ErrorMessage errorMessage) {
+    public static int validateNumber(String message, ErrorMessage errorMessage) {
         if (isNotNumber(message)) {
             throw CustomException.from(errorMessage);
         }
+        return Integer.parseInt(message);
     }
 
-    public static boolean isNotNumber(String str) {
+    private static boolean isNotNumber(String str) {
         return !str.matches("\\d+");
     }
 
-    private static void validateRange(
+    public static void validateRange(
             int number,
             int start,
             int end,
