@@ -4,7 +4,7 @@ import java.util.List;
 
 public record MovingResult(
         List<SingleMove> singleMoves,
-        boolean success,
+        String success,
         int count
 ) {
 }

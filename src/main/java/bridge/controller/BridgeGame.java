@@ -54,7 +54,7 @@ public class BridgeGame {
             if (result.get(size - 1).equals("O")) { // 성공 시 결과 반환
                 return new MovingResult(
                         result,
-                        true,
+                        "성공",
                         count
                 );
             }
@@ -65,7 +65,7 @@ public class BridgeGame {
             if (retry.equals("Q")) {
                 return new MovingResult(
                         result,
-                        false,
+                        "실패",
                         count
                 );
             }
