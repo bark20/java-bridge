@@ -33,4 +33,8 @@ public enum MoveCommand {
     public static String convertCommand(int number) {
         return from(number).command;
     }
+
+    public String getCommand() {
+        return command;
+    }
 }
