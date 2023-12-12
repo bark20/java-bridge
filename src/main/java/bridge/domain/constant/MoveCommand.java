@@ -1,4 +1,4 @@
-package bridge.domain;
+package bridge.domain.constant;
 
 import bridge.exception.InputException;
 import java.util.Arrays;
