@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class InputView {
 
     private static final Pattern BRIDGE_SIZE_PATTERN = Pattern.compile("^[0-9]{1,2}$");
-    private static final Pattern COMMAND_PATTERN = Pattern.compile("^[A-Z]{1,2}$");
+    private static final Pattern COMMAND_PATTERN = Pattern.compile("^[A-Z]$");
 
     /**
      * 다리의 길이를 입력받는다.
