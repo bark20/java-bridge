@@ -1,23 +1,53 @@
 package bridge;
 
-/**
- * 다리 건너기 게임을 관리하는 클래스
- */
-public class BridgeGame {
+import java.util.*;
 
-    /**
-     * 사용자가 칸을 이동할 때 사용하는 메서드
-     * <p>
-     * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
-    public void move() {
+public class BridgeGame {
+    private final List<String> bridge;
+
+    private List<String> upBridge = new ArrayList<>();
+    private List<String> downBridge = new ArrayList<>();
+
+    public BridgeGame(List<String> bridge) {
+        this.bridge = bridge;
     }
 
-    /**
-     * 사용자가 게임을 다시 시도할 때 사용하는 메서드
-     * <p>
-     * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
+    public boolean move(String moving, int currentLocation) {
+        if (isPossibleMove(moving, currentLocation) && moving.equals("U")) {
+            upBridge.add("O");
+            downBridge.add(" ");
+            return true;
+        }
+        if (isPossibleMove(moving, currentLocation) && moving.equals("D")) {
+            upBridge.add(" ");
+            downBridge.add("O");
+            return true;
+        }
+        if (!isPossibleMove(moving, currentLocation) && moving.equals("U")) {
+            upBridge.add("X");
+            downBridge.add(" ");
+            return false;
+        }
+        upBridge.add(" ");
+        downBridge.add("X");
+        return false;
+    }
+
+    private boolean isPossibleMove(String moving, int currentLocation) {
+        if (moving.equals(bridge.get(currentLocation))) {
+            return true;
+        }
+        return false;
+    }
+
     public void retry() {
+    }
+
+    public List<String> getUpBridge() {
+        return upBridge;
+    }
+
+    public List<String> getDownBridge() {
+        return downBridge;
     }
 }
