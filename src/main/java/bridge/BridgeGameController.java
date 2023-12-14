@@ -7,55 +7,49 @@ import java.util.*;
 
 public class BridgeGameController {
 
-    private final List<String> bridge;
+    private final BridgeGame bridgeGame;
 
-    private List<String> finalUpBridge;
-    private List<String> finalDownBridge;
     private int tryCount = 0;
+
     public BridgeGameController(List<String> bridge) {
-        this.bridge = bridge;
+        this.bridgeGame = new BridgeGame(bridge);
     }
 
-    public void run(){
-        while(true){
-            boolean isGameEnd = play();
+    public void run() {
+        while (true) {
+            BridgeGameResult bridgeGameResult = play();
             tryCount++;
-            if(isGameEnd){
-                OutputView.printGameEndMessage();
-                OutputView.printResult(finalUpBridge, finalDownBridge);
-                OutputView.printGameStateMessage(isGameEnd);
-                OutputView.printGameTryMessage(tryCount);
+            if (isGameEnd(bridgeGameResult)) {
+                OutputView.printGameResultMessage(bridgeGameResult, tryCount);
                 return;
             }
-            String gameCommand = InputView.readGameCommand(); // gameCommand 선언을 이동
-            System.out.println(gameCommand);
-            if(gameCommand.equals("Q")){
-                OutputView.printGameEndMessage();
-                OutputView.printResult(finalUpBridge, finalDownBridge);
-                OutputView.printGameStateMessage(isGameEnd);
-                OutputView.printGameTryMessage(tryCount);
-                return;
-            }
+            bridgeGame.retry();
         }
     }
 
-    private boolean play() {
-        BridgeGame bridgeGame = new BridgeGame(bridge);
-        for (int location = 0; location < bridge.size(); location++) {
+    private BridgeGameResult play() {
+        boolean isSuccess = true;
+        for (int turn = 0; turn < bridgeGame.getSize() && isSuccess; turn++) {
             String moving = InputView.readMoving();
             System.out.println(moving);
-            boolean isMove = bridgeGame.move(moving, location);
-            OutputView.printMap(bridgeGame.getUpBridge());
-            OutputView.printMap(bridgeGame.getDownBridge());
+            isSuccess = bridgeGame.move(moving);
+            OutputView.printMap(bridgeGame.getBridgeBoard());
             System.out.println();
-            if (!isMove) {
-                finalUpBridge = bridgeGame.getUpBridge();
-                finalDownBridge = bridgeGame.getDownBridge();
+        }
+        BridgeGameResult bridgeGameResult = new BridgeGameResult(
+                bridgeGame.getBridgeBoard(),
+                isSuccess);
+        return bridgeGameResult;
+    }
+
+    boolean isGameEnd(BridgeGameResult bridgeGameResult) {
+        if (!bridgeGameResult.isSuccess) {
+            String gameCommand = InputView.readGameCommand(); // gameCommand 선언을 이동
+            System.out.println(gameCommand);
+            if (gameCommand.equals("R")) {
                 return false;
             }
         }
-        finalUpBridge = bridgeGame.getUpBridge();
-        finalDownBridge = bridgeGame.getDownBridge();
         return true;
     }
 }

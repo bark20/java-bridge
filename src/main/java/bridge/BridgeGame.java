@@ -5,32 +5,22 @@ import java.util.*;
 public class BridgeGame {
     private final List<String> bridge;
 
-    private List<String> upBridge = new ArrayList<>();
-    private List<String> downBridge = new ArrayList<>();
+    private BridgeBoard bridgeBoard = new BridgeBoard();
 
     public BridgeGame(List<String> bridge) {
         this.bridge = bridge;
     }
 
-    public boolean move(String moving, int currentLocation) {
-        if (isPossibleMove(moving, currentLocation) && moving.equals("U")) {
-            upBridge.add("O");
-            downBridge.add(" ");
-            return true;
+    public boolean move(String moving) {
+        int currentLocation = bridgeBoard.getSize();
+        boolean isPossible = isPossibleMove(moving, currentLocation);
+        if (moving.equals("U")) {
+            bridgeBoard.drawUpMovement(isPossible);
         }
-        if (isPossibleMove(moving, currentLocation) && moving.equals("D")) {
-            upBridge.add(" ");
-            downBridge.add("O");
-            return true;
+        if (moving.equals("D")) {
+            bridgeBoard.drawDownMovement(isPossible);
         }
-        if (!isPossibleMove(moving, currentLocation) && moving.equals("U")) {
-            upBridge.add("X");
-            downBridge.add(" ");
-            return false;
-        }
-        upBridge.add(" ");
-        downBridge.add("X");
-        return false;
+        return isPossible;
     }
 
     private boolean isPossibleMove(String moving, int currentLocation) {
@@ -41,13 +31,14 @@ public class BridgeGame {
     }
 
     public void retry() {
+        bridgeBoard = new BridgeBoard();
     }
 
-    public List<String> getUpBridge() {
-        return upBridge;
+    public BridgeBoard getBridgeBoard() {
+        return bridgeBoard;
     }
 
-    public List<String> getDownBridge() {
-        return downBridge;
+    public int getSize() {
+        return bridge.size();
     }
 }

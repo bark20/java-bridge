@@ -57,13 +57,13 @@ public class InputView {
             throw new IllegalArgumentException("[ERROR] 영어만 허용됩니다.");
         }
         // 특정 문자만 허용하는 정규식(U와 D만 허용)
-        if (!string.equals("U") || string.equals("D")) {
+        if (!string.equals("U") && !string.equals("D")) {
             throw new IllegalArgumentException("[ERROR] U와 D만 허용됩니다.");
         }
     }
 
     public static String readGameCommand() {
-        System.out.println("이동할 칸을 선택해주세요. (위: U, 아래: D)");
+        System.out.println("게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q))");
         while (true) {
             try {
                 String string = inputGameCommand();
@@ -85,8 +85,8 @@ public class InputView {
         if (!string.matches("^[a-zA-z]+$")) {
             throw new IllegalArgumentException("[ERROR] R와 Q만 허용됩니다.");
         }
-        // 특정 문자만 허용하는 정규식(U와 D만 허용)
-        if (!string.equals("R") || string.equals("Q")) {
+        // 특정 문자만 허용하는 정규식(R와 Q만 허용)
+        if (!string.equals("R") && !string.equals("Q")) {
             throw new IllegalArgumentException("[ERROR] R와 Q만 허용됩니다.");
         }
     }
